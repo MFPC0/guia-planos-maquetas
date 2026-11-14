@@ -3,8 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-</head>
-<body>
+<meta name="description" content="Qué planos, medidas y datos enviar para generar una maqueta arquitectónica impresa en 3D de forma exacta, sin rondas de preguntas. Con plantillas DWG/DXF y tablas en Excel.">
+<meta property="og:title" content="Guía de planos para maquetas">
+<meta property="og:description" content="Qué planos, medidas y datos enviar para generar una maqueta arquitectónica impresa en 3D de forma exacta, sin rondas de preguntas. Con plantillas DWG/DXF y tablas en Excel.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mfpc0.github.io/guia-planos-maquetas/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d6e8a'/%3E%3Cpath d='M8 24V11l8-5 8 5v13H19v-7h-6v7z' fill='none' stroke='white' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>Guía de planos para maquetas</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,6 +39,7 @@
   --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --icon-dl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2.5v7.5M4.5 6.5 8 10l3.5-3.5M3 13.5h10'/%3E%3C/svg%3E");
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #11161b; --sheet: #182027; --ink: #e5eaee; --muted: #9ba7b2; --rule: #2b353e; --accent: #4fb6d4;
@@ -100,7 +105,7 @@ tr:last-child td { border-bottom: 0; }
 td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 td .sw { display: inline-block; width: 22px; height: 8px; border-radius: 2px; vertical-align: middle; margin-right: 8px; }
 
-.pack { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.pack { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .pack div { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 14px; display: grid; gap: 8px; align-content: start; }
 .pack svg { width: 40px; height: 40px; }
 .pack b { font: 700 15px var(--font-display); }
@@ -131,10 +136,8 @@ td .sw { display: inline-block; width: 22px; height: 8px; border-radius: 2px; ve
 .opts span::before { content: ""; display: inline-block; width: 11px; height: 11px; border: 1.5px solid var(--ink); border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
 
 .check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 72ch; }
-.check li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-size: 15px; }
-.check li::before { content: ""; width: 14px; height: 14px; border: 1.5px solid var(--ink); border-radius: 2px; margin-top: 4px; }
 
-footer { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 16px; font: 12px var(--font-mono); color: var(--muted); }
+footer { grid-column: 2; border-top: 1px solid var(--rule); padding-top: 16px; font: 12px var(--font-mono); color: var(--muted); }
 
 /* SVG: todo color sale de los tokens para que funcione en claro y oscuro */
 svg text { font-family: var(--font-mono); font-size: 12px; fill: var(--ink); }
@@ -166,6 +169,23 @@ svg .t-sm { font-size: 11px; }
 .hatch line { stroke: var(--muted); stroke-width: 1; }
 
 a { color: var(--accent); text-underline-offset: 2px; }
+b, strong { font-weight: 600; } /* WebKit no sintetiza 700 si solo cargó hasta 600 */
+.audiencia { color: var(--ink); font-size: 15px; }
+.dl-group { gap: 4px 10px; }
+.dl-group::before { display: none; }
+.dl-name { color: var(--muted); font-weight: 500; }
+.dl-group a { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; padding: 0 2px; font-weight: 600; text-decoration: none; }
+.dl-group a::before { content: ""; width: 12px; height: 12px; background-color: var(--accent);
+  -webkit-mask: var(--icon-dl) center / contain no-repeat; mask: var(--icon-dl) center / contain no-repeat; }
+nav.toc a[aria-current="true"] { color: var(--accent); font-weight: 600; }
+.check-status { font: 500 13px var(--font-mono); color: var(--muted); }
+.check li { display: block; font-size: 15px; }
+.check label { display: grid; grid-template-columns: 22px 1fr; gap: 8px; cursor: pointer; }
+.check input { width: 16px; height: 16px; margin: 4px 0 0; accent-color: var(--accent); }
+.glosario { display: grid; grid-template-columns: minmax(140px, max-content) minmax(0, 1fr); gap: 8px 20px; margin: 0; max-width: 72ch; }
+.glosario dt { font-weight: 600; }
+.glosario dd { margin: 0; color: var(--ink); }
+.to-index { display: none; }
 ::selection { background: color-mix(in srgb, var(--accent) 28%, transparent); }
 .skip { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: -60px; z-index: 20; padding: 8px 12px;
   background: var(--accent); color: var(--sheet); border-radius: 4px; font-weight: 600; text-decoration: none; }
@@ -184,7 +204,7 @@ body {
   background-size: auto, auto, auto, 24px 24px, 24px 24px;
   background-attachment: fixed;
 }
-nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main) {
+nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main), .to-index {
   background: var(--glass);
   border: 1px solid var(--glass-edge);
   box-shadow: var(--glass-shadow);
@@ -213,6 +233,14 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
   figure { overflow-x: auto; display: block; }
   figure svg { min-width: 700px; }
   figure > figcaption { position: sticky; left: 0; margin-top: 12px; }
+  figure > figcaption::before { content: "Desliza la figura para verla completa"; display: block; margin-bottom: 4px; font: 500 12px var(--font-mono); color: var(--accent); }
+  .pack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  footer { grid-column: 1; padding-bottom: 64px; }
+  .glosario { grid-template-columns: minmax(0, 1fr); gap: 2px 0; }
+  .glosario dd { margin-bottom: 8px; }
+  .to-index { display: inline-flex; align-items: center; position: fixed; z-index: 15; min-height: 44px; padding: 0 18px; border-radius: 22px;
+    right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    color: var(--ink); font-weight: 600; text-decoration: none; }
   .tbl, figure {
     background:
       linear-gradient(to right, var(--sheet) 30%, transparent) left / 32px 100% no-repeat local,
@@ -242,32 +270,33 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
   figure > figcaption { margin-top: 12px; }
   .tbl { overflow: visible; }
   figure svg { min-width: 0; }
-  .skip { display: none; }
+  .skip, .to-index, .check-status { display: none; }
   th { white-space: normal; }
   figure, .err, .tier, .tbl, .pack div, .fgrid { break-inside: avoid; }
   h2, h3, .sec-head, .sec-head + p { break-after: avoid; }
 }
 </style>
+</head>
+<body>
+
 
 <a class="skip" href="#contenido">Saltar al contenido</a>
 <div class="wrap">
   <header class="top">
     <h1>Guía de planos para maquetas</h1>
     <p class="lede">Qué enviarnos y cómo dibujarlo para que tu maqueta salga exacta a la primera, sin rondas de preguntas. Si algo no está dibujado o acotado, tenemos que suponerlo, y cada suposición puede ser un error en la maqueta.</p>
+    <p class="audiencia">¿No eres quien dibuja los planos? Reenvía esta guía a tu arquitecto o dibujante. A ti te tocan la <a href="#paquete">sección 01</a> (qué se entrega), la <a href="#entrega">22</a> (opciones de entrega) y la <a href="#brief">23</a> (datos de la maqueta). Los términos técnicos están en el <a href="#glosario">glosario</a>.</p>
     <div class="titleblock"><span>Para: <b>maquetas impresas en 3D</b></span><span>Unidades: <b>metros</b></span><span>Formato: <b>DWG / DXF</b></span><span>Norte: <b>arriba (+Y)</b></span><span>Origen: <b>esquina suroeste</b></span></div>
     <div class="downloads" id="descargas">
-      <a class="dl main" href="https://mfpc0.github.io/guia-planos-maquetas/descargas/Guia_planos_maquetas_paquete_completo.zip" download>Descargar todo (ZIP)<small>guía en PDF + plantillas + tablas</small></a>
+      <a class="dl main" href="https://mfpc0.github.io/guia-planos-maquetas/descargas/Guia_planos_maquetas_paquete_completo.zip" download>Descargar todo (ZIP)<small>guía en PDF + plantillas + tablas · 0.7 MB</small></a>
       <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/Guia_de_planos_para_maquetas.pdf" download>Guía en PDF</a>
-      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg" download>Plantilla DWG</a>
-      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt" download>Plantilla DWT</a>
-      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf" download>Plantilla DXF</a>
-      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg" download>Ejemplo DWG</a>
-      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf" download>Ejemplo DXF</a>
+      <span class="dl dl-group"><span class="dl-name">Plantilla</span><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg" download>DWG</a><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt" download>DWT</a><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf" download>DXF</a></span>
+      <span class="dl dl-group"><span class="dl-name">Ejemplo</span><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg" download>DWG</a><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf" download>DXF</a></span>
       <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx" download>Tablas Excel</a>
     </div>
   </header>
 
-  <nav class="toc" aria-label="Contenido">
+  <nav class="toc" id="indice" aria-label="Contenido">
     <p>Contenido</p>
     <ol>
       <li><a href="#paquete">El paquete completo</a></li>
@@ -291,9 +320,10 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
       <li><a href="#tablas">Tablas</a></li>
       <li><a href="#faltantes">Si algo falta</a></li>
       <li><a href="#errores">Errores frecuentes</a></li>
-      <li><a href="#entrega">Niveles de entrega</a></li>
+      <li><a href="#entrega">Opciones de entrega</a></li>
       <li><a href="#brief">Datos de la maqueta</a></li>
       <li><a href="#revision">Revisión final</a></li>
+      <li><a href="#glosario">Glosario</a></li>
     </ol>
   </nav>
 
@@ -470,16 +500,16 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
           <tr><td class="num">MQ-LOSA</td><td>Contorno de cada losa</td><td>Una polilínea cerrada por losa + texto con lecho bajo y espesor</td></tr>
           <tr><td class="num">MQ-HUECO-LOSA</td><td>Huecos de escalera, dobles alturas, domos</td><td>Polilínea cerrada</td></tr>
           <tr><td class="num">MQ-VOLADO</td><td>Aleros, marquesinas, pérgolas</td><td>Polilínea cerrada + nivel, espesor y pendiente</td></tr>
-          <tr><td class="num">MQ-PUERTA</td><td>Puertas</td><td>Bloque con datos (sección 06)</td></tr>
-          <tr><td class="num">MQ-VENTANA</td><td>Ventanas y canceles</td><td>Bloque con datos (sección 06)</td></tr>
-          <tr><td class="num">MQ-VANO</td><td>Pasos sin cancel y arcos</td><td>Bloque con datos (sección 06)</td></tr>
+          <tr><td class="num">MQ-PUERTA</td><td>Puertas</td><td>Bloque con datos (<a href="#vanos">sección 06</a>)</td></tr>
+          <tr><td class="num">MQ-VENTANA</td><td>Ventanas y canceles</td><td>Bloque con datos (<a href="#vanos">sección 06</a>)</td></tr>
+          <tr><td class="num">MQ-VANO</td><td>Pasos sin cancel y arcos</td><td>Bloque con datos (<a href="#vanos">sección 06</a>)</td></tr>
           <tr><td class="num">MQ-PISO</td><td>Zonas con nivel de piso propio</td><td>Polilínea cerrada + texto <code>NPT+0.64</code> dentro</td></tr>
           <tr><td class="num">MQ-ESCALERA</td><td>Escaleras</td><td>Una polilínea por escalón + flecha SUBE</td></tr>
           <tr><td class="num">MQ-ALBERCA</td><td>Alberca, escalones interiores</td><td>Polilíneas cerradas + profundidades</td></tr>
           <tr><td class="num">MQ-TERRAZA</td><td>Decks y plataformas</td><td>Polilínea cerrada + nivel</td></tr>
           <tr><td class="num">MQ-ESCALON-EXT</td><td>Escalones exteriores</td><td>Una polilínea por huella + nivel de cada una</td></tr>
           <tr><td class="num">MQ-TERRENO</td><td>Límite de la maqueta y niveles del terreno</td><td>Polilínea cerrada + puntos o curvas de nivel</td></tr>
-          <tr><td class="num">MQ-MOBILIARIO</td><td>Muebles</td><td>Bloques con nombre claro (sección 17)</td></tr>
+          <tr><td class="num">MQ-MOBILIARIO</td><td>Muebles</td><td>Bloques con nombre claro (<a href="#mobiliario">sección 17</a>)</td></tr>
           <tr><td class="num">MQ-VEGETACION</td><td>Árboles y arbustos que se incluyen</td><td>Círculo de copa + texto <code>ALTURA 6.00</code></td></tr>
           <tr><td class="num">MQ-TEXTO</td><td>Nombres de locales</td><td>Texto dentro del local</td></tr>
           <tr><td class="num">MQ-COTA</td><td>Cotas</td><td>Cotas reales (DIMENSION), no texto suelto</td></tr>
@@ -517,7 +547,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
         <li>Si un muro no tiene la altura normal del nivel, escribe su altura dentro: <code>H=2.60</code>.</li>
         <li>Muros curvos con arcos reales, no con segmentos aproximados.</li>
         <li>Muros que no van a 90°: dibuja el ángulo exacto o acótalo. No lo aproximes a escuadra.</li>
-        <li>Muros que no son verticales (inclinados o en talud): ver la sección 10.</li>
+        <li>Muros que no son verticales (inclinados o en talud): ver la <a href="#formas">sección 10</a>.</li>
         <li>Si quieres textura en la maqueta (piedra, ladrillo), indícalo en la fachada o en la tabla de acabados.</li>
       </ul>
     </section>
@@ -558,7 +588,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
       <h3>Dos formas válidas de dar esta información</h3>
       <ul class="list">
         <li><b>Bloques con atributos</b> (la mejor): cada puerta o ventana como bloque con los datos <code>ID</code>, <code>TIPO</code>, <code>ANCHO</code>, <code>ALTO</code> y <code>ANTEPECHO</code>, insertado en el centro del vano y girado con el muro.</li>
-        <li><b>Tabla de cancelería</b>: escribe el ID junto a cada vano en la planta y llena la tabla de la sección 19.</li>
+        <li><b>Tabla de cancelería</b>: escribe el ID junto a cada vano en la planta y llena la tabla de la <a href="#tablas">sección 19</a>.</li>
       </ul>
       <h3>Casos que siempre hay que aclarar</h3>
       <ul class="list">
@@ -597,7 +627,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
         <figcaption><b>Fig. 6</b>Un renglón por cada nivel: pisos, lechos bajo y alto de cada losa, remates, fondos de alberca, plataformas.</figcaption>
       </figure>
       <ul class="list">
-        <li>Llena la <b>tabla de niveles</b> (sección 19).</li>
+        <li>Llena la <b>tabla de niveles</b> (<a href="#tablas">sección 19</a>).</li>
         <li>En planta, cada zona con nivel propio (pórtico, baño hundido, terraza) como polilínea cerrada en <code>MQ-PISO</code> con su texto <code>NPT</code> dentro. Un texto sin contorno no dice dónde termina la zona.</li>
         <li>Revisa que cada texto de nivel corresponda a su planta. Un balcón de planta alta rotulado con el nivel de la planta baja confunde.</li>
       </ul>
@@ -1165,7 +1195,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
 
     <!-- 17 -->
     <section id="entrega">
-      <div class="sec-head"><span class="sec-num">22</span><h2>Niveles de entrega</h2></div>
+      <div class="sec-head"><span class="sec-num">22</span><h2>Opciones de entrega</h2></div>
       <div class="tiers">
         <div class="tier"><span class="tag">Mínima</span><h3>Modela bien lo general</h3>
           <ul><li>DWG con plantas, 2 cortes y 4 fachadas</li><li>Planta de azotea</li><li>Tabla de niveles</li></ul>
@@ -1182,7 +1212,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
     <!-- 18 -->
     <section id="brief">
       <div class="sec-head"><span class="sec-num">23</span><h2>Datos de la maqueta</h2></div>
-      <p>Esto no es de la casa, sino de la maqueta. Llénalo y mándalo junto con los planos.</p>
+      <p>Esto no es de la casa, sino de la maqueta. Llénalo a mano (imprime esta sección o el PDF) o en la hoja «Datos de la maqueta» de las <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx" download>tablas en Excel</a>, y mándalo junto con los planos.</p>
       <div class="form">
         <h3>Proyecto</h3>
         <div class="fgrid">
@@ -1227,38 +1257,105 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
     <!-- 19 -->
     <section id="revision">
       <div class="sec-head"><span class="sec-num">24</span><h2>Revisión final antes de enviar</h2></div>
+      <p class="check-status" aria-live="polite"><span id="check-count">0</span> de 25 listos. Las casillas se guardan solo en este navegador.</p>
+      <h3>Archivo y envío</h3>
       <ul class="check">
-        <li>Un solo DWG o DXF, en metros, todo en Model Space, más PDF de respaldo.</li>
-        <li>Referencias externas (XREF) incluidas en el archivo.</li>
-        <li>Fecha y versión de los planos, y contacto para dudas técnicas.</li>
-        <li>Plantas con norte arriba y en el mismo origen (o desplazamiento escrito).</li>
-        <li>Muros en capas EXT e INT, como polilíneas cerradas, sin huecos ni líneas duplicadas.</li>
-        <li>Cada vano con ancho, alto y antepecho (bloque con datos o tabla), con su ID.</li>
-        <li>Tabla de niveles completa y niveles por zona en planta.</li>
-        <li>Planta de azotea con losas, pretiles, volados y elementos.</li>
-        <li>Techos inclinados con pendiente, enrase, cumbrera y alero.</li>
-        <li>Rampas, sótanos y dobles alturas con sus niveles.</li>
-        <li>Formas especiales (inclinadas, curvas, celosías) con sus medidas o en modelo 3D.</li>
-        <li>Edificios de varios niveles: lista de niveles, plantas tipo y lo que atraviesa niveles.</li>
-        <li>Terreno con curvas o puntos de nivel, plataformas y muros de contención, si no es plano.</li>
-        <li>Escaleras especiales (caracol, curvas) con radios, giro y sentido.</li>
-        <li>Revisaste la tabla de valores por defecto y corregiste lo que no aplica.</li>
-        <li>Dos cortes o más, marcados en planta con dirección de vista.</li>
-        <li>Las cuatro fachadas, del mismo ancho que la planta.</li>
-        <li>Escalera con flecha SUBE, peraltes y huella.</li>
-        <li>Alberca y exteriores con niveles y límite de la maqueta.</li>
-        <li>Mobiliario: investigado (bloques con altura) o indicado como especular.</li>
-        <li>Cotas parciales que suman la total; misma altura total en todas las vistas.</li>
-        <li>Renders o fotos de referencia, si existen.</li>
-        <li>Logo en formato vectorial, si la base lleva rotulación.</li>
-        <li>Todo en un ZIP con nombres claros, versión y fecha, compartido por enlace.</li>
-        <li>Datos de la maqueta llenos (sección 23).</li>
+        <li><label><input type="checkbox" id="chk-01"> Un solo DWG o DXF, en metros, todo en Model Space, más PDF de respaldo.</label></li>
+        <li><label><input type="checkbox" id="chk-02"> Referencias externas (XREF) incluidas en el archivo.</label></li>
+        <li><label><input type="checkbox" id="chk-03"> Fecha y versión de los planos, y contacto para dudas técnicas.</label></li>
+        <li><label><input type="checkbox" id="chk-24"> Todo en un ZIP con nombres claros, versión y fecha, compartido por enlace.</label></li>
+        <li><label><input type="checkbox" id="chk-22"> Renders o fotos de referencia, si existen.</label></li>
+        <li><label><input type="checkbox" id="chk-23"> Logo en formato vectorial, si la base lleva rotulación.</label></li>
+      </ul>
+      <h3>Plantas y muros</h3>
+      <ul class="check">
+        <li><label><input type="checkbox" id="chk-04"> Plantas con norte arriba y en el mismo origen (o desplazamiento escrito).</label></li>
+        <li><label><input type="checkbox" id="chk-05"> Muros en capas EXT e INT, como polilíneas cerradas, sin huecos ni líneas duplicadas.</label></li>
+        <li><label><input type="checkbox" id="chk-06"> Cada vano con ancho, alto y antepecho (bloque con datos o tabla), con su ID.</label></li>
+        <li><label><input type="checkbox" id="chk-07"> Tabla de niveles completa y niveles por zona en planta.</label></li>
+      </ul>
+      <h3>Techos, niveles y formas</h3>
+      <ul class="check">
+        <li><label><input type="checkbox" id="chk-08"> Planta de azotea con losas, pretiles, volados y elementos.</label></li>
+        <li><label><input type="checkbox" id="chk-09"> Techos inclinados con pendiente, enrase, cumbrera y alero.</label></li>
+        <li><label><input type="checkbox" id="chk-10"> Rampas, sótanos y dobles alturas con sus niveles.</label></li>
+        <li><label><input type="checkbox" id="chk-11"> Formas especiales (inclinadas, curvas, celosías) con sus medidas o en modelo 3D.</label></li>
+        <li><label><input type="checkbox" id="chk-12"> Edificios de varios niveles: lista de niveles, plantas tipo y lo que atraviesa niveles.</label></li>
+        <li><label><input type="checkbox" id="chk-13"> Terreno con curvas o puntos de nivel, plataformas y muros de contención, si no es plano.</label></li>
+        <li><label><input type="checkbox" id="chk-14"> Escaleras especiales (caracol, curvas) con radios, giro y sentido.</label></li>
+        <li><label><input type="checkbox" id="chk-15"> Revisaste la tabla de valores por defecto y corregiste lo que no aplica.</label></li>
+      </ul>
+      <h3>Cortes, fachadas y exteriores</h3>
+      <ul class="check">
+        <li><label><input type="checkbox" id="chk-16"> Dos cortes o más, marcados en planta con dirección de vista.</label></li>
+        <li><label><input type="checkbox" id="chk-17"> Las cuatro fachadas, del mismo ancho que la planta.</label></li>
+        <li><label><input type="checkbox" id="chk-18"> Escalera con flecha SUBE, peraltes y huella.</label></li>
+        <li><label><input type="checkbox" id="chk-19"> Alberca y exteriores con niveles y límite de la maqueta.</label></li>
+        <li><label><input type="checkbox" id="chk-20"> Mobiliario: investigado (bloques con altura) o indicado como especular.</label></li>
+        <li><label><input type="checkbox" id="chk-21"> Cotas parciales que suman la total; misma altura total en todas las vistas.</label></li>
+      </ul>
+      <h3>Datos de la maqueta</h3>
+      <ul class="check">
+        <li><label><input type="checkbox" id="chk-25"> Datos de la maqueta llenos (<a href="#brief">sección 23</a>).</label></li>
       </ul>
     </section>
 
+    <section id="glosario">
+      <div class="sec-head"><span class="sec-num">25</span><h2>Glosario</h2></div>
+      <dl class="glosario">
+        <dt>Antepecho</dt><dd>Altura del piso terminado a la parte baja de una ventana.</dd>
+        <dt>Cerramiento o dintel</dt><dd>Parte del muro sobre un vano; su altura desde el piso es antepecho + alto.</dd>
+        <dt>NPT</dt><dd>Nivel de piso terminado: la altura del piso acabado respecto al ±0.00.</dd>
+        <dt>Lecho bajo / lecho alto</dt><dd>Cara inferior / superior de una losa.</dd>
+        <dt>Pretil</dt><dd>Muro bajo que remata una azotea o un balcón por encima de la losa.</dd>
+        <dt>Volado o alero</dt><dd>Parte de una losa o techo que sobresale del muro.</dd>
+        <dt>Enrase</dt><dd>Altura donde un techo inclinado se apoya en el muro.</dd>
+        <dt>Cumbrera</dt><dd>Línea más alta de un techo inclinado.</dd>
+        <dt>Peralte / huella</dt><dd>Altura / profundidad de cada escalón.</dd>
+        <dt>Flecha</dt><dd>Cuánto sube un arco o una bóveda sobre su arranque.</dd>
+        <dt>Desplome</dt><dd>Cuánto se sale un muro inclinado arriba respecto a su base.</dd>
+        <dt>Model Space</dt><dd>Espacio de AutoCAD donde se dibuja a tamaño real.</dd>
+        <dt>Polilínea cerrada</dt><dd>Contorno de un solo trazo que termina donde empieza.</dd>
+        <dt>Bloque con atributos</dt><dd>Elemento de AutoCAD que guarda datos (ancho, alto…) además del dibujo.</dd>
+        <dt>XREF</dt><dd>Archivo externo insertado como referencia dentro de un dibujo.</dd>
+        <dt>Escala 1:200</dt><dd>1 cm de la maqueta equivale a 2 m reales.</dd>
+      </dl>
+    </section>
+
   </main>
+  <a class="to-index" href="#indice">Índice</a>
   <footer>Guía de planos para maquetas impresas en 3D · Medidas en metros · Los valores de los ejemplos son ilustrativos.</footer>
 </div>
+
+<script>
+/* Marca en el índice la sección visible y guarda la lista de revisión en este navegador */
+(function () {
+  var links = {};
+  document.querySelectorAll('nav.toc a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting || !links[e.target.id]) return;
+        Object.keys(links).forEach(function (k) { links[k].removeAttribute('aria-current'); });
+        links[e.target.id].setAttribute('aria-current', 'true');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function (sec) { io.observe(sec); });
+  }
+  var boxes = document.querySelectorAll('.check input[type=checkbox]');
+  var count = document.getElementById('check-count');
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem('guia-maquetas-revision') || '{}'); } catch (e) {}
+  function update() {
+    var n = 0, state = {};
+    boxes.forEach(function (b) { if (b.checked) { n++; state[b.id] = true; } });
+    count.textContent = n;
+    try { localStorage.setItem('guia-maquetas-revision', JSON.stringify(state)); } catch (e) {}
+  }
+  boxes.forEach(function (b) { b.checked = !!saved[b.id]; b.addEventListener('change', update); });
+  update();
+})();
+</script>
 
 </body>
 </html>
