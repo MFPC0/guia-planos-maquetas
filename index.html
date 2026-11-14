@@ -171,12 +171,24 @@ svg .t-sm { font-size: 11px; }
 a { color: var(--accent); text-underline-offset: 2px; }
 b, strong { font-weight: 600; } /* WebKit no sintetiza 700 si solo cargó hasta 600 */
 .audiencia { color: var(--ink); font-size: 15px; }
-.dl-group { gap: 4px 10px; }
-.dl-group::before { display: none; }
-.dl-name { color: var(--muted); font-weight: 500; }
-.dl-group a { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; padding: 0 2px; font-weight: 600; text-decoration: none; }
-.dl-group a::before { content: ""; width: 12px; height: 12px; background-color: var(--accent);
+.dl-ver::before { display: none; }
+.toc-dl { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-weight: 600; color: var(--accent); text-decoration: none; }
+.toc-dl::before, .dl-btn::before { content: ""; width: 14px; height: 14px; flex: none; background-color: currentColor;
   -webkit-mask: var(--icon-dl) center / contain no-repeat; mask: var(--icon-dl) center / contain no-repeat; }
+.dl-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.dl-card { padding: 18px; border-radius: 14px; display: grid; gap: 10px; align-content: start; }
+.dl-card.destacada { grid-column: 1 / -1; border: 2px solid var(--accent) !important; }
+.dl-card h3 { margin: 0; display: flex; align-items: center; gap: 10px; }
+.dl-card h3 svg { width: 28px; height: 28px; flex: none; }
+.dl-card p { margin: 0; font-size: 14px; }
+.dl-card .dl-meta { font: 500 12px var(--font-mono); color: var(--muted); }
+.dl-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.dl-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border-radius: 10px;
+  border: 1px solid var(--accent); color: var(--accent); font-weight: 600; text-decoration: none; }
+.dl-btn small { font-weight: 400; color: var(--muted); }
+.dl-btn:hover { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.dl-btn.principal { background: var(--accent); color: var(--sheet); }
+.dl-btn.principal small { color: var(--sheet); opacity: .85; }
 nav.toc a[aria-current="true"] { color: var(--accent); font-weight: 600; }
 .check-status { font: 500 13px var(--font-mono); color: var(--muted); }
 .check li { display: block; font-size: 15px; }
@@ -206,7 +218,7 @@ body {
 }
 .envio { margin-top: 8px; padding: 20px; border-radius: 14px; display: grid; gap: 8px; border: 2px solid var(--accent) !important; }
 .envio h3 { margin: 0; }
-nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main), .to-index, .envio {
+nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main), .to-index, .envio, .dl-card {
   background: var(--glass);
   border: 1px solid var(--glass-edge);
   box-shadow: var(--glass-shadow);
@@ -237,6 +249,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
   figure > figcaption { position: sticky; left: 0; margin-top: 12px; }
   figure > figcaption::before { content: "Desliza la figura para verla completa"; display: block; margin-bottom: 4px; font: 500 12px var(--font-mono); color: var(--accent); }
   .pack { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dl-cards { grid-template-columns: minmax(0, 1fr); }
   footer { grid-column: 1; padding-bottom: 64px; }
   .glosario { grid-template-columns: minmax(0, 1fr); gap: 2px 0; }
   .glosario dd { margin-bottom: 8px; }
@@ -259,7 +272,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
     --good: #2c7a4b; --bad: #c0392b; --wallface: #e3e8e6; color-scheme: light; }
   body { font-size: 11pt; padding: 0; }
   body { background: #ffffff; }
-  nav.toc, .pack div, .tier, .err, .form, .tbl, .dl, figure { background: #ffffff; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; border: 1px solid var(--rule); }
+  nav.toc, .pack div, .tier, .err, .form, .tbl, .dl, figure, .dl-card, .envio { background: #ffffff; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; border: 1px solid var(--rule); }
   .tier.rec { border: 2px solid var(--accent); }
   .wrap { grid-template-columns: 1fr; gap: 20px; padding: 0; max-width: none; }
   nav.toc { position: static; }
@@ -289,16 +302,14 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
     <p class="lede">Qué enviarnos y cómo dibujarlo para que tu maqueta salga exacta a la primera, sin rondas de preguntas. Si algo no está dibujado o acotado, tenemos que suponerlo, y cada suposición puede ser un error en la maqueta.</p>
     <p class="audiencia">¿No eres quien dibuja los planos? Reenvía esta guía a tu arquitecto o dibujante. A ti te tocan la <a href="#paquete">sección 01</a> (qué se entrega), la <a href="#entrega">22</a> (opciones de entrega) y la <a href="#brief">23</a> (datos de la maqueta). Los términos técnicos están en el <a href="#glosario">glosario</a>.</p>
     <div class="titleblock"><span>Para: <b>maquetas impresas en 3D</b></span><span>Unidades: <b>metros</b></span><span>Formato: <b>DWG / DXF</b></span><span>Norte: <b>arriba (+Y)</b></span><span>Origen: <b>esquina suroeste</b></span></div>
-    <div class="downloads" id="descargas">
+    <div class="downloads">
       <a class="dl main" href="https://mfpc0.github.io/guia-planos-maquetas/descargas/Guia_planos_maquetas_paquete_completo.zip" download>Descargar todo (ZIP)<small>guía en PDF + plantillas + tablas · 0.7 MB</small></a>
-      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/Guia_de_planos_para_maquetas.pdf" download>Guía en PDF</a>
-      <span class="dl dl-group"><span class="dl-name">Plantilla</span><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg" download>DWG</a><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt" download>DWT</a><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf" download>DXF</a></span>
-      <span class="dl dl-group"><span class="dl-name">Ejemplo</span><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg" download>DWG</a><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf" download>DXF</a></span>
-      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx" download>Tablas Excel</a>
+      <a class="dl dl-ver" href="#descargas">Ver todas las descargas</a>
     </div>
   </header>
 
   <nav class="toc" id="indice" aria-label="Contenido">
+    <a class="toc-dl" href="#descargas">Descargas</a>
     <p>Contenido</p>
     <ol>
       <li><a href="#paquete">El paquete completo</a></li>
@@ -331,6 +342,43 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
 
   <main id="contenido">
 
+    <section id="descargas">
+      <div class="sec-head"><h2>Descargas</h2></div>
+      <p>Todo lo que acompaña esta guía. Los archivos de dibujo abren en AutoCAD, BricsCAD, DraftSight y programas compatibles.</p>
+      <div class="dl-cards">
+        <article class="dl-card destacada">
+          <h3><svg viewBox="0 0 32 32" aria-hidden="true"><path class="s-ink" d="M7 6h18l4 4v16H3V10z"/><path class="s-acc" d="M16 6v14M12 16l4 4 4-4"/></svg>Paquete completo</h3>
+          <p>La guía en PDF, la plantilla, el ejemplo y las tablas en un solo archivo. Si no sabes qué necesitas, empieza aquí.</p>
+          <p class="dl-meta">Para todos</p>
+          <div class="dl-links"><a class="dl-btn principal" href="https://mfpc0.github.io/guia-planos-maquetas/descargas/Guia_planos_maquetas_paquete_completo.zip" download aria-label="Descargar el paquete completo en ZIP, 0.7 MB">ZIP <small>0.7 MB</small></a></div>
+        </article>
+        <article class="dl-card">
+          <h3><svg viewBox="0 0 32 32" aria-hidden="true"><path class="s-ink" d="M8 3h12l6 6v20H8z"/><path class="s-ink" d="M20 3v6h6"/><path class="s-thin" d="M12 15h10M12 19h10M12 23h6"/></svg>Guía en PDF</h3>
+          <p>Esta misma guía para imprimir o reenviar por correo.</p>
+          <p class="dl-meta">Para todos</p>
+          <div class="dl-links"><a class="dl-btn" href="https://mfpc0.github.io/guia-planos-maquetas/Guia_de_planos_para_maquetas.pdf" download aria-label="Descargar la guía en PDF, 1.1 MB">PDF <small>1.1 MB</small></a></div>
+        </article>
+        <article class="dl-card">
+          <h3><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="s-ink" x="4" y="6" width="24" height="20"/><path class="s-thin" d="M4 12h24M4 18h24M13 6v20"/></svg>Tablas en Excel</h3>
+          <p>Ventanas, puertas, niveles, mobiliario, acabados, elementos especiales, valores por defecto y datos de la maqueta, con listas de opciones.</p>
+          <p class="dl-meta">Para todos</p>
+          <div class="dl-links"><a class="dl-btn" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx" download aria-label="Descargar las tablas en XLSX, 18 KB">XLSX <small>18 KB</small></a></div>
+        </article>
+        <article class="dl-card">
+          <h3><svg viewBox="0 0 32 32" aria-hidden="true"><rect class="s-ink" x="4" y="5" width="24" height="22"/><path class="s-ink" d="M16 5v11h12"/><path class="s-door" d="M4 20a7 7 0 0 1 7 7"/></svg>Plantilla de dibujo</h3>
+          <p>Dibujo vacío en metros con las 45 capas MQ-, los bloques de ventana, puerta y vano con sus datos y 18 muebles con su altura. El DWT es la plantilla de AutoCAD para dibujos nuevos.</p>
+          <p class="dl-meta">Para quien dibuja</p>
+          <div class="dl-links"><a class="dl-btn" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg" download aria-label="Descargar la plantilla en DWG, 25 KB">DWG <small>25 KB</small></a><a class="dl-btn" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt" download aria-label="Descargar la plantilla en DWT, 25 KB">DWT <small>25 KB</small></a><a class="dl-btn" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf" download aria-label="Descargar la plantilla en DXF, 109 KB">DXF <small>109 KB</small></a></div>
+        </article>
+        <article class="dl-card">
+          <h3><svg viewBox="0 0 32 32" aria-hidden="true"><path class="s-ink" d="M5 27V13l11-8 11 8v14z"/><path class="s-win" d="M12 27v-8h8v8"/></svg>Ejemplo dibujado</h3>
+          <p>Una casa pequeña dibujada exactamente como pide esta guía. Ábrela para ver cómo queda cada cosa.</p>
+          <p class="dl-meta">Para quien dibuja</p>
+          <div class="dl-links"><a class="dl-btn" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg" download aria-label="Descargar el ejemplo en DWG, 26 KB">DWG <small>26 KB</small></a><a class="dl-btn" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf" download aria-label="Descargar el ejemplo en DXF, 117 KB">DXF <small>117 KB</small></a></div>
+        </article>
+      </div>
+    </section>
+
     <!-- 01 -->
     <section id="paquete">
       <div class="sec-head"><span class="sec-num">01</span><h2>El paquete completo</h2></div>
@@ -346,16 +394,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
         <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect class="s-ink" x="5" y="9" width="30" height="22" rx="2"/><path class="s-thin" d="M5 27l9-9 7 7 5-5 9 9"/><circle class="s-ink" cx="27" cy="15" r="3"/></svg><b>Referencias visuales</b><span>Renders o fotos de la obra, si existen</span></div>
       </div>
       <p>Indica también la <b>fecha y versión</b> de los planos y <b>quién puede contestar dudas técnicas</b> (nombre y teléfono del arquitecto o dibujante). Así, si algo no cuadra, lo resolvemos con esa persona sin escalar al cliente.</p>
-      <h3>Plantillas listas para usar</h3>
-      <p>Para no empezar de cero, descarga estos archivos. Ya traen las capas, los bloques con sus datos y las tablas tal como los pide esta guía.</p>
-      <div class="tbl"><table>
-        <thead><tr><th>Archivo</th><th>Qué es</th></tr></thead>
-        <tbody>
-          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg" download>plantilla_maqueta.dwg</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt" download>.dwt</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf" download>.dxf</a></td><td>Dibujo vacío en metros con las 45 capas <code>MQ-</code>, los bloques de ventana, puerta y vano con sus datos, y 18 muebles con su altura. El <code>.dwt</code> sirve como plantilla de AutoCAD para dibujos nuevos</td></tr>
-          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg" download>ejemplo_maqueta.dwg</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf" download>.dxf</a></td><td>Una casa pequeña dibujada exactamente como pide esta guía. Ábrela para ver cómo queda cada cosa</td></tr>
-          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx" download>tablas_maqueta.xlsx</a></td><td>Todas las tablas (ventanas, puertas, niveles, mobiliario, acabados, elementos especiales), los valores por defecto y los datos de la maqueta, con listas de opciones</td></tr>
-        </tbody>
-      </table></div>
+      <p>Para no empezar de cero, en <a href="#descargas">Descargas</a> están la plantilla de dibujo, un ejemplo y las tablas en Excel, preparados tal como los pide esta guía.</p>
     </section>
 
     <!-- 02 -->
