@@ -204,7 +204,9 @@ body {
   background-size: auto, auto, auto, 24px 24px, 24px 24px;
   background-attachment: fixed;
 }
-nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main), .to-index {
+.envio { margin-top: 8px; padding: 20px; border-radius: 14px; display: grid; gap: 8px; border: 2px solid var(--accent) !important; }
+.envio h3 { margin: 0; }
+nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main), .to-index, .envio {
   background: var(--glass);
   border: 1px solid var(--glass-edge);
   box-shadow: var(--glass-shadow);
@@ -1298,6 +1300,10 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
       <ul class="check">
         <li><label><input type="checkbox" id="chk-25"> Datos de la maqueta llenos (<a href="#brief">sección 23</a>).</label></li>
       </ul>
+      <div class="envio">
+        <h3>Enviar a MFPC</h3>
+        <p>Con todo listo, comparte con MFPC el enlace del ZIP (Drive, OneDrive, Dropbox o WeTransfer) por el medio en que ya están en contacto. Si algo no cuadra, MFPC lo resolverá con la persona que pusiste como contacto técnico, y antes de imprimir recibirás el modelo 3D para aprobarlo.</p>
+      </div>
     </section>
 
     <section id="glosario">
@@ -1324,7 +1330,7 @@ figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(-
 
   </main>
   <a class="to-index" href="#indice">Índice</a>
-  <footer>Guía de planos para maquetas impresas en 3D · Medidas en metros · Los valores de los ejemplos son ilustrativos.</footer>
+  <footer>MFPC · Guía de planos para maquetas impresas en 3D · Medidas en metros · Los valores de los ejemplos son ilustrativos.</footer>
 </div>
 
 <script>
