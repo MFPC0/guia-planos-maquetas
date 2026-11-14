@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</head>
+<body>
+<title>Guía de planos para maquetas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: hoja de dibujo; índice fijo a la izquierda en pantallas anchas, una columna de lectura con láminas ilustradas */
+:root {
+  --paper: #f3f5f4;        /* papel frío de plotter */
+  --sheet: #ffffff;
+  --ink: #18222d;          /* tinta de dibujo */
+  --muted: #5a6672;
+  --rule: #d5dbd8;
+  --accent: #0d6e8a;       /* azul petróleo de cota */
+  --c-int: #8b97a3;        /* muro interior */
+  --c-win: #0f8fb3;        /* ventanas */
+  --c-door: #c47f10;       /* puertas */
+  --c-lvl: #2c7a4b;        /* niveles */
+  --c-roof: #7657b3;       /* losas / azotea */
+  --c-furn: #a3532b;       /* mobiliario */
+  --good: #2c7a4b;
+  --bad: #c0392b;
+  --wallface: #e3e8e6;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #11161b; --sheet: #182027; --ink: #e5eaee; --muted: #9ba7b2; --rule: #2b353e; --accent: #4fb6d4;
+  --c-int: #74818d; --c-win: #4cc4e8; --c-door: #e8a945; --c-lvl: #5fc289; --c-roof: #a88be3; --c-furn: #d98a5f;
+  --good: #5fc289; --bad: #ef6b5b; --wallface: #222c34; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #11161b; --sheet: #182027; --ink: #e5eaee; --muted: #9ba7b2; --rule: #2b353e; --accent: #4fb6d4;
+  --c-int: #74818d; --c-win: #4cc4e8; --c-door: #e8a945; --c-lvl: #5fc289; --c-roof: #a88be3; --c-furn: #d98a5f;
+  --good: #5fc289; --bad: #ef6b5b; --wallface: #222c34; color-scheme: dark }
+
+body { background: var(--paper); color: var(--ink); font: 16px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.wrap { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-block: 40px 80px; }
+header.top { grid-column: 1 / -1; display: grid; gap: 12px; border-bottom: 2px solid var(--ink); padding-bottom: 24px; }
+.eyebrow { font: 500 12px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 800 clamp(30px, 5vw, 48px)/1.05 var(--font-display); margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
+.lede { max-width: 66ch; margin: 0; font-size: 18px; color: var(--muted); }
+.titleblock { display: flex; flex-wrap: wrap; gap: 8px 24px; font: 12px var(--font-mono); color: var(--muted); }
+.titleblock b { color: var(--ink); font-weight: 500; }
+
+nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font-size: 14px; }
+nav.toc p { font: 500 11px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: t; }
+nav.toc li { counter-increment: t; }
+nav.toc a { display: grid; grid-template-columns: 26px 1fr; color: var(--ink); text-decoration: none; padding: 3px 0; }
+nav.toc a::before { content: counter(t, decimal-leading-zero); font: 12px var(--font-mono); color: var(--muted); padding-top: 2px; }
+nav.toc a:hover { color: var(--accent); }
+
+main { min-width: 0; display: grid; gap: 64px; }
+section { display: grid; gap: 18px; scroll-margin-top: 24px; }
+.sec-head { display: grid; gap: 4px; }
+.sec-num { font: 500 12px var(--font-mono); color: var(--accent); letter-spacing: 0.08em; }
+h2 { font: 700 28px/1.15 var(--font-display); margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h3 { font: 700 18px/1.3 var(--font-display); margin: 8px 0 0; }
+p { margin: 0; max-width: 68ch; }
+ul.list, ol.list { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 68ch; }
+code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
+code { background: var(--wallface); padding: 1px 5px; border-radius: 3px; }
+
+figure { margin: 0; background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 18px; display: grid; gap: 12px; }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 10px; }
+figcaption b { color: var(--ink); font-family: var(--font-mono); font-weight: 500; margin-right: 6px; }
+
+.why { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; color: var(--muted); max-width: 66ch; }
+.why b { color: var(--ink); }
+
+.tbl { overflow-x: auto; border: 1px solid var(--rule); border-radius: 4px; background: var(--sheet); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 500 11px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--paper); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td .sw { display: inline-block; width: 22px; height: 8px; border-radius: 2px; vertical-align: middle; margin-right: 8px; }
+
+.pack { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.pack div { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 14px; display: grid; gap: 8px; align-content: start; }
+.pack svg { width: 40px; height: 40px; }
+.pack b { font: 700 15px var(--font-display); }
+.pack span { font-size: 13px; color: var(--muted); }
+
+.tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.tier { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.tier.rec { border: 2px solid var(--accent); }
+.tier h3 { margin: 0; }
+.tier .tag { font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+.tier ul { margin: 0; padding-left: 18px; font-size: 14px; display: grid; gap: 4px; }
+.tier p { font-size: 14px; color: var(--muted); }
+
+.errors { display: grid; gap: 10px; }
+.err { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; border: 1px solid var(--rule); border-radius: 4px; background: var(--sheet); overflow: hidden; }
+.err > div { padding: 12px 14px; font-size: 14px; min-width: 0; }
+.err > div:first-child { border-right: 1px solid var(--rule); }
+.err .k { display: block; margin-bottom: 4px; font: 500 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.err .k.no { color: var(--bad); } .err .k.si { color: var(--good); }
+
+.form { background: var(--sheet); border: 1px solid var(--ink); border-radius: 4px; padding: 20px; display: grid; gap: 18px; }
+.form h3 { margin: 0; font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; }
+.fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 24px; }
+.field { display: grid; gap: 2px; font-size: 14px; }
+.field label { color: var(--muted); font-size: 12px; font-family: var(--font-mono); }
+.field .line { border-bottom: 1px solid var(--ink); min-height: 24px; }
+.opts { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; }
+.opts span::before { content: ""; display: inline-block; width: 11px; height: 11px; border: 1.5px solid var(--ink); border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+.check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 72ch; }
+.check li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-size: 15px; }
+.check li::before { content: ""; width: 14px; height: 14px; border: 1.5px solid var(--ink); border-radius: 2px; margin-top: 4px; }
+
+footer { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 16px; font: 12px var(--font-mono); color: var(--muted); }
+
+/* SVG: todo color sale de los tokens para que funcione en claro y oscuro */
+svg text { font-family: var(--font-mono); font-size: 11px; fill: var(--ink); }
+svg .t-muted { fill: var(--muted); }
+svg .t-acc { fill: var(--accent); }
+svg .t-lvl { fill: var(--c-lvl); }
+svg .t-good { fill: var(--good); font-weight: 500; }
+svg .t-bad { fill: var(--bad); font-weight: 500; }
+svg .t-big { font-family: var(--font-display); font-weight: 700; font-size: 13px; }
+svg .t-sm { font-size: 10px; }
+.f-ink { fill: var(--ink); } .f-int { fill: var(--c-int); } .f-sheet { fill: var(--sheet); } .f-paper { fill: var(--paper); }
+.f-wall { fill: var(--wallface); } .f-acc { fill: var(--accent); } .f-roof { fill: var(--c-roof); fill-opacity: .18; }
+.f-roofs { fill: var(--c-roof); } .f-win { fill: var(--c-win); fill-opacity: .16; } .f-water { fill: var(--c-win); fill-opacity: .2; }
+.f-good { fill: var(--good); } .f-bad { fill: var(--bad); } .f-door { fill: var(--c-door); } .f-lvl { fill: var(--c-lvl); }
+.f-furn { fill: var(--c-furn); fill-opacity: .12; }
+.s-ink { stroke: var(--ink); fill: none; stroke-width: 1.5; }
+.s-thin { stroke: var(--muted); fill: none; stroke-width: 1; }
+.s-rule { stroke: var(--rule); fill: none; stroke-width: 1; }
+.s-dim { stroke: var(--accent); fill: none; stroke-width: 1; }
+.s-win { stroke: var(--c-win); fill: none; stroke-width: 1.6; }
+.s-door { stroke: var(--c-door); fill: none; stroke-width: 1.5; }
+.s-lvl { stroke: var(--c-lvl); fill: none; stroke-width: 1.2; stroke-dasharray: 5 3; }
+.s-roof { stroke: var(--c-roof); fill: none; stroke-width: 1.5; }
+.s-furn { stroke: var(--c-furn); fill: none; stroke-width: 1.2; stroke-dasharray: 3 2; }
+.s-good { stroke: var(--good); fill: none; stroke-width: 2; }
+.s-bad { stroke: var(--bad); fill: none; stroke-width: 2; }
+.s-acc { stroke: var(--accent); fill: none; stroke-width: 1.5; }
+.s-cut { stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-dasharray: 12 3 2 3; }
+.hatch line { stroke: var(--muted); stroke-width: 1; }
+
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 860px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-block: 24px 56px; }
+  nav.toc { position: static; border: 1px solid var(--rule); border-radius: 4px; padding: 14px; background: var(--sheet); }
+  nav.toc ol { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+  .err { grid-template-columns: minmax(0, 1fr); }
+  .err > div:first-child { border-right: 0; border-bottom: 1px solid var(--rule); }
+}
+@media print {
+  :root { --paper: #ffffff; --sheet: #ffffff; --ink: #18222d; --muted: #5a6672; --rule: #c9d0cc; --accent: #0d6e8a;
+    --c-int: #8b97a3; --c-win: #0f8fb3; --c-door: #c47f10; --c-lvl: #2c7a4b; --c-roof: #7657b3; --c-furn: #a3532b;
+    --good: #2c7a4b; --bad: #c0392b; --wallface: #e3e8e6; color-scheme: light; }
+  body { font-size: 11pt; padding: 0; }
+  .wrap { grid-template-columns: 1fr; gap: 20px; padding: 0; max-width: none; }
+  nav.toc { position: static; }
+  /* Chrome no respeta break-inside dentro de contenedores grid al paginar: en impresión todo es bloque */
+  main, section, figure, .err, .errors, .form { display: block; }
+  main > section + section { margin-top: 32px; }
+  section > * + *, .form > * + * { margin-top: 14px; }
+  .errors > .err + .err { margin-top: 10px; }
+  .err > div:first-child { border-right: 0; border-bottom: 1px solid var(--rule); }
+  figure > figcaption { margin-top: 12px; }
+  .tbl { overflow: visible; }
+  th { white-space: normal; }
+  figure, .err, .tier, .tbl, .pack div, .fgrid { break-inside: avoid; }
+  h2, h3, .sec-head, .sec-head + p { break-after: avoid; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Maquetas arquitectónicas impresas en 3D</div>
+    <h1>Guía de planos para maquetas</h1>
+    <p class="lede">Qué enviarnos y cómo dibujarlo para que tu maqueta salga exacta a la primera, sin rondas de preguntas. Si algo no está dibujado o acotado, tenemos que suponerlo, y cada suposición puede ser un error en la maqueta.</p>
+    <div class="titleblock"><span>Unidades: <b>metros</b></span><span>Formato: <b>DWG / DXF</b></span><span>Norte: <b>arriba (+Y)</b></span><span>Origen: <b>esquina suroeste</b></span></div>
+<div class="titleblock"><a href="Guia_de_planos_para_maquetas.pdf" style="font-weight:600">Descargar en PDF</a></div>
+  </header>
+
+  <nav class="toc" aria-label="Contenido">
+    <p>Contenido</p>
+    <ol>
+      <li><a href="#paquete">El paquete completo</a></li>
+      <li><a href="#archivo">El archivo</a></li>
+      <li><a href="#origen">Origen y alineación</a></li>
+      <li><a href="#capas">Capas</a></li>
+      <li><a href="#muros">Muros</a></li>
+      <li><a href="#vanos">Puertas y ventanas</a></li>
+      <li><a href="#niveles">Niveles</a></li>
+      <li><a href="#caja">Techos removibles</a></li>
+      <li><a href="#azotea">Azotea y techos</a></li>
+      <li><a href="#formas">Formas especiales</a></li>
+      <li><a href="#varios-niveles">Varios niveles</a></li>
+      <li><a href="#cortes">Cortes</a></li>
+      <li><a href="#fachadas">Fachadas</a></li>
+      <li><a href="#escaleras">Escaleras</a></li>
+      <li><a href="#exteriores">Alberca y exteriores</a></li>
+      <li><a href="#terreno">Terreno y contexto</a></li>
+      <li><a href="#mobiliario">Mobiliario</a></li>
+      <li><a href="#escalas">Qué se ve a cada escala</a></li>
+      <li><a href="#tablas">Tablas</a></li>
+      <li><a href="#faltantes">Si algo falta</a></li>
+      <li><a href="#errores">Errores frecuentes</a></li>
+      <li><a href="#entrega">Niveles de entrega</a></li>
+      <li><a href="#brief">Datos de la maqueta</a></li>
+      <li><a href="#revision">Revisión final</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <!-- 01 -->
+    <section id="paquete">
+      <div class="sec-head"><span class="sec-num">01</span><h2>El paquete completo</h2></div>
+      <p>Esto es todo lo que necesitamos. Con estas ocho cosas modelamos sin hacer preguntas.</p>
+      <div class="pack">
+        <div><svg viewBox="0 0 40 40" aria-hidden="true"><path class="s-ink" d="M9 4h16l7 7v25H9z"/><path class="s-ink" d="M25 4v7h7"/><text x="12" y="28" style="font-size:8px">DWG</text></svg><b>Archivo DWG o DXF</b><span>Todo en un solo archivo, en metros</span></div>
+        <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect class="s-ink" x="5" y="7" width="30" height="26"/><path class="s-ink" d="M20 7v14M20 21h15"/><path class="s-door" d="M5 26a6 6 0 0 1 6 6"/></svg><b>Una planta por nivel</b><span>Con muros, vanos, niveles y muebles</span></div>
+        <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect class="f-roof" x="5" y="8" width="30" height="24"/><rect class="s-roof" x="5" y="8" width="30" height="24"/><rect class="s-ink" x="10" y="13" width="7" height="7"/></svg><b>Planta de azotea</b><span>Losas, pretiles, volados, tinacos</span></div>
+        <div><svg viewBox="0 0 40 40" aria-hidden="true"><path class="s-ink" d="M3 34h34M8 34V10h24v24M8 22h24"/><path class="s-lvl" d="M3 22h4M3 10h4"/></svg><b>Dos cortes o más</b><span>Uno a lo largo y otro a lo ancho</span></div>
+        <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect class="s-ink" x="6" y="10" width="28" height="22"/><rect class="s-win" x="10" y="15" width="8" height="8"/><rect class="s-win" x="22" y="15" width="8" height="8"/><text x="15" y="8" style="font-size:7px">N S E O</text></svg><b>Las cuatro fachadas</b><span>Norte, sur, este y oeste</span></div>
+        <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect class="s-ink" x="5" y="8" width="30" height="24"/><path class="s-thin" d="M5 15h30M5 22h30M5 29h30M16 8v24"/></svg><b>Tablas</b><span>Ventanas, puertas y niveles</span></div>
+        <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect class="s-ink" x="9" y="5" width="22" height="30"/><path class="s-thin" d="M13 12h14M13 18h14M13 24h9"/><path class="s-good" d="M13 30l2 2 4-4"/></svg><b>Datos de la maqueta</b><span>Escala, piezas, alcance, colores</span></div>
+        <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect class="s-ink" x="5" y="9" width="30" height="22" rx="2"/><path class="s-thin" d="M5 27l9-9 7 7 5-5 9 9"/><circle class="s-ink" cx="27" cy="15" r="3"/></svg><b>Referencias visuales</b><span>Renders o fotos de la obra, si existen</span></div>
+      </div>
+      <p>Indica también la <b>fecha y versión</b> de los planos y <b>quién puede contestar dudas técnicas</b> (nombre y teléfono del arquitecto o dibujante). Así, si algo no cuadra, lo resolvemos con esa persona sin escalar al cliente.</p>
+    </section>
+
+    <!-- 02 -->
+    <section id="archivo">
+      <div class="sec-head"><span class="sec-num">02</span><h2>El archivo</h2></div>
+      <p>Necesitamos el archivo de dibujo, no una imagen. En un DWG o DXF cada línea tiene coordenadas exactas que se pueden medir; en una foto o un escaneo solo se puede estimar.</p>
+      <figure>
+        <svg viewBox="0 0 680 230" role="img" aria-label="Un archivo DWG con líneas precisas es correcto; una foto o escaneo no sirve">
+          <rect class="f-paper" x="20" y="20" width="300" height="160" rx="3"/>
+          <rect class="s-ink" x="60" y="45" width="150" height="110"/>
+          <path class="s-ink" d="M135 45v60M135 105h75"/>
+          <path class="s-door" d="M60 130a25 25 0 0 1 25 25"/>
+          <path class="s-dim" d="M60 168h150M60 164v8M210 164v8"/><text x="120" y="164" class="t-acc">12.40</text>
+          <circle class="s-good" cx="275" cy="60" r="18"/><path class="s-good" d="M266 60l6 6 12-12"/>
+          <text x="20" y="200" class="t-big">DWG o DXF</text>
+          <text x="20" y="218" class="t-muted">vectorial · en metros · en Model Space</text>
+          <rect class="f-paper" x="360" y="20" width="300" height="160" rx="3"/>
+          <g transform="rotate(-6 510 100)"><rect class="f-wall" x="420" y="40" width="180" height="120"/>
+          <path class="s-thin" d="M440 60c20 2 60-3 80 1s40-2 60 0M441 140c25-3 50 3 80-1s40 2 58 0M440 60c-2 20 3 50-1 80M580 61c2 25-3 50 0 79M510 61c-1 15 2 30 0 45"/></g>
+          <circle class="s-bad" cx="615" cy="60" r="18"/><path class="s-bad" d="M607 52l16 16M623 52l-16 16"/>
+          <text x="360" y="200" class="t-big">Foto, escaneo o JPG</text>
+          <text x="360" y="218" class="t-muted">no se puede medir con precisión</text>
+        </svg>
+        <figcaption><b>Fig. 1</b>Un DWG o DXF se mide exacto. Una imagen solo se puede estimar.</figcaption>
+      </figure>
+      <ul class="list">
+        <li><b>Formato:</b> DWG o DXF, versión AutoCAD 2013 a 2018. Agrega un PDF vectorial de cada lámina como respaldo.</li>
+        <li><b>Un solo archivo</b> con todas las plantas, cortes y fachadas.</li>
+        <li><b>Todo en Model Space</b>, a tamaño real (escala 1:1). No dibujes a escala dentro de las presentaciones.</li>
+        <li><b>Unidades en metros</b>, y configúralas así en el archivo (comando <code>UNITS</code> o variable <code>INSUNITS = 6</code>).</li>
+        <li>Si el proyecto está en otro programa, revisa la tabla de abajo.</li>
+      </ul>
+      <h3>Si el proyecto está en otro programa</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Programa</th><th>Qué enviar</th></tr></thead>
+        <tbody>
+          <tr><td>AutoCAD, BricsCAD, DraftSight</td><td>DWG</td></tr>
+          <tr><td>Revit</td><td>DWG de plantas, cortes y fachadas + IFC (y el <code>.rvt</code> si se puede)</td></tr>
+          <tr><td>ArchiCAD</td><td>DWG de las vistas + IFC (y el <code>.pln</code> si se puede)</td></tr>
+          <tr><td>SketchUp</td><td>DWG de planos + el <code>.skp</code></td></tr>
+          <tr><td>Rhino</td><td>DWG de planos + el <code>.3dm</code></td></tr>
+          <tr><td>Vectorworks u otro</td><td>DWG + IFC</td></tr>
+          <tr><td>Solo hay modelo 3D, sin planos</td><td>Sirve si es un modelo sólido, a tamaño real, en metros y con los niveles separados. Indica que es la fuente principal</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Que el archivo llegue completo</h3>
+      <ul class="list">
+        <li><b>Referencias externas (XREF):</b> si el dibujo usa otros archivos insertados, enlázalos al archivo (comando <code>BIND</code>) o envía todo junto con <code>ETRANSMIT</code>. Si no, esas partes llegan vacías.</li>
+        <li><b>Versión:</b> escribe la fecha y la revisión de los planos. Si algo cambia después, manda otra vez el juego completo, no solo la lámina que cambió.</li>
+        <li><b>Remodelaciones:</b> separa lo existente de lo nuevo (por ejemplo <code>MQ-MURO-EXT-PB-EXIST</code>) y di qué se va a maquetear.</li>
+      </ul>
+      <h3>Si no tienes DWG</h3>
+      <p>Se puede trabajar con PDF, pero solo si es vectorial (exportado desde el programa de dibujo, no escaneado) y está acotado por completo: cada muro, cada vano y cada nivel con su cota escrita. Con planos en papel o escaneados, la precisión depende solo de las cotas; lo que no tenga cota se estima a ojo.</p>
+    </section>
+
+    <!-- 03 -->
+    <section id="origen">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Origen y alineación</h2></div>
+      <p>Las plantas de todos los niveles deben coincidir entre sí. Así sabemos exactamente qué muro de arriba está sobre qué muro de abajo, que es lo que define cómo se arma y se apoya cada pieza de la maqueta.</p>
+      <figure>
+        <svg viewBox="0 0 680 250" role="img" aria-label="Plantas encimadas en el mismo origen es correcto; plantas lado a lado sin desplazamiento declarado no">
+          <rect class="s-ink" x="50" y="50" width="200" height="140"/>
+          <path class="s-roof" d="M50 190V75h170v115" style="stroke-dasharray:6 3"/>
+          <path class="s-acc" d="M40 190h20M50 180v20"/><circle class="f-acc" cx="50" cy="190" r="3"/>
+          <text x="58" y="208" class="t-acc">(0,0) esquina suroeste</text>
+          <path class="s-ink" d="M285 70V40"/><path class="f-ink" d="M285 34l-6 12h12z"/><text x="281" y="84">N</text>
+          <text x="140" y="44" class="t-muted t-sm">planta baja</text>
+          <text x="110" y="70" class="t-sm" style="fill:var(--c-roof)">planta alta</text>
+          <circle class="s-good" cx="300" cy="150" r="14"/><path class="s-good" d="M293 150l5 5 9-9"/>
+          <text x="40" y="235" class="t-big">Encimadas en el mismo origen</text>
+          <rect class="s-ink" x="380" y="60" width="110" height="90"/><text x="395" y="170" class="t-muted t-sm">planta baja</text>
+          <rect class="s-roof" x="540" y="60" width="110" height="90"/><text x="555" y="170" class="t-sm" style="fill:var(--c-roof)">planta alta</text>
+          <path class="s-dim" d="M380 190h160M380 186v8M540 186v8"/><text x="440" y="186" class="t-acc">Δx = ?</text>
+          <text x="380" y="220" class="t-big">Lado a lado</text>
+          <text x="380" y="236" class="t-muted">solo si escribes el desplazamiento exacto</text>
+        </svg>
+        <figcaption><b>Fig. 2</b>Lo ideal es que todas las plantas compartan el punto (0,0). Si las dibujas lado a lado, escribe la distancia exacta entre ellas.</figcaption>
+      </figure>
+      <ul class="list">
+        <li>Norte hacia arriba en todas las plantas, con flecha de norte.</li>
+        <li>Punto (0,0) en la esquina suroeste del desplante de la construcción.</li>
+        <li>Mismos ejes estructurales (letras y números) en plantas, cortes y fachadas.</li>
+        <li>Un solo nivel de referencia ±0.00 para toda la obra. Indica si es el terreno, la banqueta u otro.</li>
+        <li><b>Planos georreferenciados</b> (coordenadas UTM, números de seis o siete cifras): avísanos o mueve el dibujo cerca del (0,0). Si la planta está girada respecto al norte real, indica el ángulo.</li>
+        <li>Si hay <b>varios edificios</b> en el terreno (casa, estudio, palapa), todos van en el mismo archivo y con el mismo origen.</li>
+      </ul>
+    </section>
+
+    <!-- 04 -->
+    <section id="capas">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Capas</h2></div>
+      <p>Separar el dibujo en capas nos dice qué es cada línea. Si todo viene en la capa <code>0</code>, tenemos que adivinar qué es muro, qué es mueble y qué es un achurado decorativo.</p>
+      <figure>
+        <svg viewBox="0 0 680 330" role="img" aria-label="Planta de ejemplo con cada tipo de elemento en su capa">
+          <path class="f-ink" fill-rule="evenodd" d="M30 30h360v260H30zM40 40v240h340V40z"/>
+          <rect class="f-sheet" x="80" y="29" width="80" height="12"/><path class="s-win" d="M80 33h80M80 37h80"/>
+          <rect class="f-sheet" x="379" y="70" width="12" height="60"/><path class="s-win" d="M383 70v60M387 70v60"/>
+          <rect class="f-sheet" x="100" y="279" width="50" height="12"/>
+          <path class="s-door" d="M100 280V230M100 230a50 50 0 0 1 50 50"/>
+          <path class="f-int" d="M200 40h7v110h-7zM200 190h7v90h-7z"/>
+          <path class="f-int" d="M207 160h93v6h-93zM340 160h40v6h-40z"/>
+          <path class="s-door" d="M207 150h40M247 150a40 40 0 0 1-40 40"/>
+          <path class="s-door" d="M300 166v40M300 206a40 40 0 0 0 40-40"/>
+          <rect class="f-furn" x="290" y="60" width="60" height="80"/><rect class="s-furn" x="290" y="60" width="60" height="80"/>
+          <rect class="f-furn" x="60" y="200" width="100" height="35"/><rect class="s-furn" x="60" y="200" width="100" height="35"/>
+          <rect class="s-lvl" x="215" y="175" width="160" height="100"/>
+          <text x="240" y="230" class="t-lvl">NPT +0.95</text>
+          <text x="90" y="120" class="t-lvl">NPT +1.00</text>
+          <text x="96" y="58" class="t-sm" style="fill:var(--c-win)">V-01</text>
+          <text x="58" y="268" class="t-sm" style="fill:var(--c-door)">P-01</text>
+          <g transform="translate(420 40)">
+            <rect class="f-ink" x="0" y="0" width="34" height="10"/><text x="46" y="9">MQ-MURO-EXT</text>
+            <rect class="f-int" x="0" y="32" width="34" height="7"/><text x="46" y="40">MQ-MURO-INT</text>
+            <path class="s-win" d="M0 63h34M0 67h34"/><text x="46" y="70">MQ-VENTANA</text>
+            <path class="s-door" d="M0 100V82a18 18 0 0 1 18 18"/><text x="46" y="98">MQ-PUERTA</text>
+            <rect class="s-lvl" x="0" y="116" width="34" height="14"/><text x="46" y="127">MQ-PISO (zona + nivel)</text>
+            <rect class="s-furn" x="0" y="146" width="34" height="14"/><text x="46" y="157">MQ-MOBILIARIO</text>
+            <text x="0" y="190" class="t-muted">Lo que no está en una capa MQ-</text>
+            <text x="0" y="205" class="t-muted">(ejes, achurados, notas) se ignora.</text>
+          </g>
+        </svg>
+        <figcaption><b>Fig. 3</b>Cada tipo de elemento en su propia capa. Los colores son solo para esta ilustración.</figcaption>
+      </figure>
+      <ul class="list">
+        <li><b>Bloques:</b> no los explotes, no los escales distinto en X y en Y, y no dejes copias encimadas.</li>
+        <li><b>Achurados:</b> un muro dibujado solo con achurado, sin su contorno, no sirve. El achurado debe tener su polilínea de borde.</li>
+      </ul>
+      <p>Usa este formato de nombre: <code>MQ-elemento-nivel</code>, por ejemplo <code>MQ-MURO-EXT-PB</code>. Niveles: <code>PB</code> planta baja, <code>PA</code> planta alta, <code>N3</code>… para más niveles, <code>AZ</code> azotea, <code>EXT</code> exterior.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Capa</th><th>Qué va ahí</th><th>Cómo dibujarlo</th></tr></thead>
+        <tbody>
+          <tr><td class="num">MQ-MURO-EXT</td><td>Muros de fachada</td><td>Polilínea cerrada con su espesor real</td></tr>
+          <tr><td class="num">MQ-MURO-INT</td><td>Muros interiores</td><td>Polilínea cerrada con su espesor real</td></tr>
+          <tr><td class="num">MQ-MURO-BAJO</td><td>Pretiles, muretes, jardineras</td><td>Polilínea cerrada + texto <code>H=1.00</code> dentro</td></tr>
+          <tr><td class="num">MQ-BARANDAL</td><td>Barandales de vidrio o herrería</td><td>Línea al eje + texto <code>H=1.00 VIDRIO</code></td></tr>
+          <tr><td class="num">MQ-COLUMNA</td><td>Columnas aisladas</td><td>Polilínea cerrada o círculo con su sección real</td></tr>
+          <tr><td class="num">MQ-VIGA</td><td>Trabes visibles, dinteles grandes</td><td>Polilínea cerrada + texto <code>PERALTE 0.40</code></td></tr>
+          <tr><td class="num">MQ-LOSA</td><td>Contorno de cada losa</td><td>Una polilínea cerrada por losa + texto con lecho bajo y espesor</td></tr>
+          <tr><td class="num">MQ-HUECO-LOSA</td><td>Huecos de escalera, dobles alturas, domos</td><td>Polilínea cerrada</td></tr>
+          <tr><td class="num">MQ-VOLADO</td><td>Aleros, marquesinas, pérgolas</td><td>Polilínea cerrada + nivel, espesor y pendiente</td></tr>
+          <tr><td class="num">MQ-PUERTA</td><td>Puertas</td><td>Bloque con datos (sección 06)</td></tr>
+          <tr><td class="num">MQ-VENTANA</td><td>Ventanas y canceles</td><td>Bloque con datos (sección 06)</td></tr>
+          <tr><td class="num">MQ-VANO</td><td>Pasos sin cancel y arcos</td><td>Bloque con datos (sección 06)</td></tr>
+          <tr><td class="num">MQ-PISO</td><td>Zonas con nivel de piso propio</td><td>Polilínea cerrada + texto <code>NPT+0.64</code> dentro</td></tr>
+          <tr><td class="num">MQ-ESCALERA</td><td>Escaleras</td><td>Una polilínea por escalón + flecha SUBE</td></tr>
+          <tr><td class="num">MQ-ALBERCA</td><td>Alberca, escalones interiores</td><td>Polilíneas cerradas + profundidades</td></tr>
+          <tr><td class="num">MQ-TERRAZA</td><td>Decks y plataformas</td><td>Polilínea cerrada + nivel</td></tr>
+          <tr><td class="num">MQ-ESCALON-EXT</td><td>Escalones exteriores</td><td>Una polilínea por huella + nivel de cada una</td></tr>
+          <tr><td class="num">MQ-TERRENO</td><td>Límite de la maqueta y niveles del terreno</td><td>Polilínea cerrada + puntos o curvas de nivel</td></tr>
+          <tr><td class="num">MQ-MOBILIARIO</td><td>Muebles</td><td>Bloques con nombre claro (sección 17)</td></tr>
+          <tr><td class="num">MQ-VEGETACION</td><td>Árboles y arbustos que se incluyen</td><td>Círculo de copa + texto <code>ALTURA 6.00</code></td></tr>
+          <tr><td class="num">MQ-TEXTO</td><td>Nombres de locales</td><td>Texto dentro del local</td></tr>
+          <tr><td class="num">MQ-COTA</td><td>Cotas</td><td>Cotas reales (DIMENSION), no texto suelto</td></tr>
+          <tr><td class="num">MQ-REF</td><td>Todo lo que no se modela</td><td>Lo que sea; se ignora</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- 05 -->
+    <section id="muros">
+      <div class="sec-head"><span class="sec-num">05</span><h2>Muros</h2></div>
+      <p>Cada muro como una <b>polilínea cerrada</b> de su espesor real, con las esquinas bien resueltas. Dos líneas sueltas obligan a adivinar dónde empieza y termina el muro.</p>
+      <figure>
+        <svg viewBox="0 0 680 210" role="img" aria-label="Esquina de muro correcta frente a esquina con hueco y líneas encimadas">
+          <path class="f-ink" d="M40 40h150v16H56v104H40z"/>
+          <circle class="s-good" cx="170" cy="130" r="14"/><path class="s-good" d="M163 130l5 5 9-9"/>
+          <text x="40" y="185" class="t-big">Polilínea cerrada</text>
+          <text x="40" y="201" class="t-muted">esquina resuelta, sin huecos</text>
+          <path class="f-ink" d="M266 40h140v16H266z"/><path class="f-ink" d="M246 64h16v96h-16z"/>
+          <circle class="s-bad" cx="254" cy="52" r="13" style="stroke-dasharray:3 2"/>
+          <circle class="s-bad" cx="386" cy="130" r="14"/><path class="s-bad" d="M379 123l14 14M393 123l-14 14"/>
+          <text x="246" y="185" class="t-big">Hueco en la esquina</text>
+          <text x="246" y="201" class="t-muted">aunque sea de 1 mm</text>
+          <path class="s-ink" d="M470 40h150M470 56h150M470 40v120M486 56v104M470 44h148"/>
+          <path class="s-bad" d="M470 40h150" style="stroke-width:1;stroke-dasharray:2 2"/>
+          <circle class="s-bad" cx="600" cy="130" r="14"/><path class="s-bad" d="M593 123l14 14M607 123l-14 14"/>
+          <text x="470" y="185" class="t-big">Líneas sueltas o duplicadas</text>
+          <text x="470" y="201" class="t-muted">usa OVERKILL antes de enviar</text>
+        </svg>
+        <figcaption><b>Fig. 4</b>La esquina tiene que cerrar exacta. Los huecos y las líneas duplicadas crean muros fantasma o cuartos abiertos.</figcaption>
+      </figure>
+      <ul class="list">
+        <li>Separa los muros de <b>fachada</b> (exteriores) de los <b>interiores</b> en capas distintas.</li>
+        <li>En puertas y ventanas el muro se interrumpe, como se dibuja normalmente, y además se coloca el bloque del vano.</li>
+        <li>Si un muro no tiene la altura normal del nivel, escribe su altura dentro: <code>H=2.60</code>.</li>
+        <li>Muros curvos con arcos reales, no con segmentos aproximados.</li>
+        <li>Muros que no van a 90°: dibuja el ángulo exacto o acótalo. No lo aproximes a escuadra.</li>
+        <li>Muros que no son verticales (inclinados o en talud): ver la sección 10.</li>
+        <li>Si quieres textura en la maqueta (piedra, ladrillo), indícalo en la fachada o en la tabla de acabados.</li>
+      </ul>
+    </section>
+
+    <!-- 06 -->
+    <section id="vanos">
+      <div class="sec-head"><span class="sec-num">06</span><h2>Puertas y ventanas</h2></div>
+      <p>Es el dato que más falta. La planta dice dónde está una ventana y cuánto mide de ancho, pero no a qué altura empieza ni cuánto mide de alto. Necesitamos los dos datos de cada vano.</p>
+      <figure>
+        <svg viewBox="0 0 680 290" role="img" aria-label="Alzado de una ventana con ancho, alto, antepecho y cerramiento; planta con el bloque y su punto de inserción">
+          <rect class="f-wall" x="20" y="30" width="250" height="200"/>
+          <path class="s-ink" d="M20 230h250M20 30h250"/>
+          <text x="24" y="24" class="t-muted t-sm">lecho bajo de losa</text>
+          <text x="24" y="246" class="t-lvl">NPT del local</text>
+          <rect class="f-sheet" x="80" y="80" width="120" height="90"/><rect class="f-win" x="80" y="80" width="120" height="90"/>
+          <rect class="s-win" x="80" y="80" width="120" height="90"/><path class="s-win" d="M140 80v90"/>
+          <path class="s-dim" d="M80 62h120M80 58v8M200 58v8"/><text x="118" y="56" class="t-acc">ANCHO</text>
+          <path class="s-dim" d="M215 80v90M211 80h8M211 170h8"/><text x="222" y="129" class="t-acc">ALTO</text>
+          <path class="s-dim" d="M215 170v60M211 230h8"/><text x="222" y="204" class="t-acc">ANTEPECHO</text>
+          <path class="s-dim" d="M300 80v150M296 80h8M296 230h8"/><text x="308" y="150" class="t-acc">CERRAMIENTO</text>
+          <text x="308" y="164" class="t-muted t-sm">(alto + antepecho)</text>
+          <text x="20" y="272" class="t-big">Alzado: cuatro medidas</text>
+          <path class="f-ink" d="M440 120h60v16h-60zM600 120h60v16h-60z"/>
+          <rect class="f-sheet" x="500" y="119" width="100" height="18"/><path class="s-win" d="M500 125h100M500 131h100"/>
+          <path class="s-acc" d="M550 118v20M540 128h20"/><circle class="s-acc" cx="550" cy="128" r="5"/>
+          <text x="535" y="108" style="fill:var(--c-win)">V-03</text>
+          <path class="s-thin" d="M553 133l20 35"/>
+          <text x="500" y="182" class="t-sm">punto de inserción: centro del vano,</text>
+          <text x="500" y="195" class="t-sm">sobre el eje del muro</text>
+          <rect class="s-rule" x="440" y="210" width="230" height="58"/>
+          <text x="450" y="226" class="t-sm">ID V-03 · TIPO CORREDIZA</text>
+          <text x="450" y="241" class="t-sm">ANCHO 1.40 · ALTO 0.90</text>
+          <text x="450" y="256" class="t-sm">ANTEPECHO 1.00</text>
+          <text x="440" y="285" class="t-big">Planta: bloque con datos</text>
+        </svg>
+        <figcaption><b>Fig. 5</b>Para cada vano: ancho, alto y antepecho, medidos desde el piso terminado (NPT) de ese local. El mismo ID debe aparecer en la planta, en la fachada y en la tabla.</figcaption>
+      </figure>
+      <h3>Dos formas válidas de dar esta información</h3>
+      <ul class="list">
+        <li><b>Bloques con atributos</b> (la mejor): cada puerta o ventana como bloque con los datos <code>ID</code>, <code>TIPO</code>, <code>ANCHO</code>, <code>ALTO</code> y <code>ANTEPECHO</code>, insertado en el centro del vano y girado con el muro.</li>
+        <li><b>Tabla de cancelería</b>: escribe el ID junto a cada vano en la planta y llena la tabla de la sección 19.</li>
+      </ul>
+      <h3>Casos que siempre hay que aclarar</h3>
+      <ul class="list">
+        <li><b>Ventanas de piso a techo:</b> ¿llegan a la losa o tienen un dintel arriba? ¿De cuánto?</li>
+        <li><b>Ventanas altas de baño:</b> antepecho y alto exactos.</li>
+        <li><b>Vanos que se ven en la fachada pero no en la planta</b> (una puerta al balcón, por ejemplo): todos deben estar en las dos vistas.</li>
+        <li><b>Arcos:</b> claro, altura donde empieza la curva (arranque) y altura máxima (corona).</li>
+        <li><b>Puertas:</b> ancho libre, alto y si son abatibles, corredizas o dobles.</li>
+      </ul>
+    </section>
+
+    <!-- 07 -->
+    <section id="niveles">
+      <div class="sec-head"><span class="sec-num">07</span><h2>Niveles</h2></div>
+      <p>Las alturas de la maqueta salen de los niveles. Necesitamos cada superficie horizontal con su nivel, medida desde el mismo ±0.00.</p>
+      <figure>
+        <svg viewBox="0 0 680 330" role="img" aria-label="Corte con niveles: terreno, piso de planta baja, lecho bajo de losa, piso de planta alta, losa de azotea y pretil">
+          <defs><pattern id="hatch" class="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6"/></pattern></defs>
+          <path class="s-ink" d="M20 300h400"/>
+          <rect x="50" y="270" width="380" height="30" fill="url(#hatch)"/><rect class="s-ink" x="50" y="270" width="380" height="30"/>
+          <rect class="f-ink" x="60" y="44" width="10" height="226"/><rect class="f-ink" x="410" y="44" width="10" height="226"/>
+          <rect class="f-int" x="232" y="175" width="7" height="95"/><rect class="f-int" x="232" y="80" width="7" height="77"/>
+          <rect x="70" y="157" width="340" height="18" fill="url(#hatch)"/><rect class="s-ink" x="70" y="157" width="340" height="18"/>
+          <rect x="70" y="62" width="340" height="18" fill="url(#hatch)"/><rect class="s-ink" x="70" y="62" width="340" height="18"/>
+          <text x="110" y="232" class="t-muted">PLANTA BAJA</text><text x="110" y="128" class="t-muted">PLANTA ALTA</text>
+          <g class="s-lvl"><path d="M420 44h40M410 62h50M410 80h50M410 157h50M410 175h50M430 270h30M420 300h40"/></g>
+          <text x="468" y="48" class="t-lvl">+7.00 remate de pretil</text>
+          <text x="468" y="66" class="t-lvl">+6.90 lecho alto de losa</text>
+          <text x="468" y="84" class="t-lvl">+6.60 lecho bajo de losa</text>
+          <text x="468" y="161" class="t-lvl">+4.00 piso planta alta</text>
+          <text x="468" y="179" class="t-lvl">+3.70 lecho bajo de losa</text>
+          <text x="468" y="274" class="t-lvl">+1.00 piso planta baja</text>
+          <text x="468" y="304" class="t-lvl">±0.00 terreno</text>
+          <text x="20" y="322" class="t-muted t-sm">Ejemplo sin escala. Valores ilustrativos.</text>
+        </svg>
+        <figcaption><b>Fig. 6</b>Un renglón por cada nivel: pisos, lechos bajo y alto de cada losa, remates, fondos de alberca, plataformas.</figcaption>
+      </figure>
+      <ul class="list">
+        <li>Llena la <b>tabla de niveles</b> (sección 19).</li>
+        <li>En planta, cada zona con nivel propio (pórtico, baño hundido, terraza) como polilínea cerrada en <code>MQ-PISO</code> con su texto <code>NPT</code> dentro. Un texto sin contorno no dice dónde termina la zona.</li>
+        <li>Revisa que cada texto de nivel corresponda a su planta. Un balcón de planta alta rotulado con el nivel de la planta baja confunde.</li>
+      </ul>
+      <h3>Rampas, sótanos y dobles alturas</h3>
+      <figure>
+        <svg viewBox="0 0 680 250" role="img" aria-label="Rampa que baja a un sótano y corte con doble altura y hueco en la losa">
+          <path class="s-ink" d="M20 110h20M240 110h200"/>
+          <path class="s-ink" d="M40 110l200 60h180V110"/>
+          <rect x="240" y="170" width="180" height="12" fill="url(#hatch)"/><path class="s-ink" d="M240 182h180"/>
+          <path class="s-dim" d="M40 90h200M40 86v8M240 86v8"/><text x="86" y="84" class="t-acc">largo de la rampa</text>
+          <path class="s-dim" d="M228 110v60M224 110h8M224 170h8"/>
+          <text x="40" y="128" class="t-lvl">±0.00</text><text x="300" y="162" class="t-lvl">sótano −1.20</text>
+          <text x="40" y="215" class="t-big">Rampa y sótano</text>
+          <text x="40" y="231" class="t-muted t-sm">nivel inicial, nivel final, largo y ancho</text>
+          <path class="s-ink" d="M460 182h200"/>
+          <rect class="f-ink" x="470" y="30" width="8" height="152"/><rect class="f-ink" x="642" y="30" width="8" height="152"/>
+          <rect x="560" y="100" width="82" height="10" fill="url(#hatch)"/><rect class="s-ink" x="560" y="100" width="82" height="10"/>
+          <rect x="478" y="30" width="164" height="10" fill="url(#hatch)"/><rect class="s-ink" x="478" y="30" width="164" height="10"/>
+          <path class="s-thin" d="M478 105h82" style="stroke-dasharray:4 3"/>
+          <text x="486" y="96" class="t-acc t-sm">hueco en losa</text>
+          <path class="s-dim" d="M500 40v142M496 40h8M496 182h8"/><text x="508" y="150" class="t-acc t-sm">doble altura</text>
+          <text x="460" y="215" class="t-big">Doble altura</text>
+          <text x="460" y="231" class="t-muted t-sm">hueco en planta y en corte</text>
+        </svg>
+        <figcaption><b>Fig. 7</b>Una rampa necesita su nivel inicial, su nivel final y su largo. Una doble altura se dibuja como hueco en la losa, en la planta y en un corte.</figcaption>
+      </figure>
+      <ul class="list">
+        <li><b>Rampas</b> (de autos o de acceso): nivel inicial, nivel final, largo y ancho.</li>
+        <li><b>Sótanos y medios niveles:</b> sus niveles de piso y de losa, y qué muros quedan bajo el terreno.</li>
+        <li><b>Dobles alturas:</b> el hueco en <code>MQ-HUECO-LOSA</code> y un corte que lo atraviese.</li>
+        <li><b>Cocheras:</b> nivel del piso, portón (ancho y alto) y si los autos van en la maqueta.</li>
+      </ul>
+    </section>
+
+    <!-- 08 -->
+    <section id="caja">
+      <div class="sec-head"><span class="sec-num">08</span><h2>Cómo se arman los techos removibles</h2></div>
+      <p>Para que puedas quitar los techos y ver el interior, la maqueta se arma como una caja. Por eso necesitamos saber qué muros son de fachada y cuáles son interiores.</p>
+      <figure>
+        <svg viewBox="0 0 680 320" role="img" aria-label="Maqueta tipo caja: cascarón con muros de fachada a altura total, losas que entran entre ellos y descansan en muros interiores">
+          <rect class="f-ink" x="50" y="290" width="380" height="16"/>
+          <rect class="f-ink" x="50" y="60" width="12" height="230"/><rect class="f-ink" x="418" y="60" width="12" height="230"/>
+          <rect class="f-int" x="236" y="200" width="8" height="90"/>
+          <rect class="f-acc" x="66" y="182" width="348" height="16" style="fill-opacity:.85"/>
+          <rect class="f-acc" x="236" y="118" width="8" height="64" style="fill-opacity:.85"/>
+          <rect class="f-roofs" x="66" y="100" width="348" height="16"/>
+          <path class="s-acc" d="M150 172V140M144 148l6-8 6 8"/>
+          <path class="s-roof" d="M330 92V70M324 78l6-8 6 8"/>
+          <path class="s-thin" d="M64 190l18 22"/><text x="84" y="222" class="t-sm">holgura 0.2 mm entre losa y muro</text>
+          <g transform="translate(460 70)">
+            <rect class="f-ink" x="0" y="0" width="16" height="12"/><text x="26" y="10">1 · Cascarón</text>
+            <text x="26" y="25" class="t-muted t-sm">base y muros de fachada</text><text x="26" y="38" class="t-muted t-sm">a altura total</text>
+            <rect class="f-int" x="0" y="60" width="16" height="12"/><text x="26" y="70">Muros interiores</text>
+            <text x="26" y="85" class="t-muted t-sm">llegan a la losa y la sostienen</text>
+            <rect class="f-acc" x="0" y="112" width="16" height="12"/><text x="26" y="122">2 · Entrepiso</text>
+            <text x="26" y="137" class="t-muted t-sm">losa + muros de planta alta,</text><text x="26" y="150" class="t-muted t-sm">sale hacia arriba</text>
+            <rect class="f-roofs" x="0" y="172" width="16" height="12"/><text x="26" y="182">3 · Azotea</text>
+            <text x="26" y="197" class="t-muted t-sm">entra entre los muros, deja</text><text x="26" y="210" class="t-muted t-sm">el pretil a la vista</text>
+          </g>
+        </svg>
+        <figcaption><b>Fig. 8</b>Las losas entran entre los muros de fachada y descansan sobre los interiores. Para calcularlo necesitamos muros separados en EXT e INT, plantas alineadas y los niveles de cada losa.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 09 -->
+    <section id="azotea">
+      <div class="sec-head"><span class="sec-num">09</span><h2>Azotea y techos</h2></div>
+      <p>Sin planta de azotea tenemos que adivinar qué cubre el techo. Es una lámina sencilla, pero indispensable.</p>
+      <figure>
+        <svg viewBox="0 0 680 290" role="img" aria-label="Planta de azotea con losa, pretil, volado con pendiente, tinaco, domo y zona sin losa">
+          <rect class="f-roof" x="60" y="40" width="340" height="170"/>
+          <path class="f-ink" fill-rule="evenodd" d="M60 40h340v170H60zM66 46v158h328V46z"/>
+          <rect x="400" y="40" width="70" height="170" fill="url(#hatch)"/><rect class="s-roof" x="400" y="40" width="70" height="170"/>
+          <path class="s-acc" d="M415 125h40M447 119l8 6-8 6"/><text x="413" y="115" class="t-acc t-sm">2 %</text>
+          <rect class="s-ink" x="100" y="70" width="40" height="40"/><path class="s-thin" d="M100 70l40 40M140 70l-40 40"/>
+          <rect class="s-ink" x="240" y="110" width="60" height="44"/><path class="s-thin" d="M240 132h60M270 110v44"/>
+          <rect class="s-thin" x="60" y="210" width="200" height="50" style="stroke-dasharray:6 4"/>
+          <text x="92" y="240" class="t-muted">SIN LOSA</text>
+          <text x="500" y="56">Contorno de cada losa</text>
+          <text x="500" y="76">Pretil: espesor y altura</text>
+          <text x="500" y="96">Volado: contorno, espesor,</text><text x="500" y="110">nivel y pendiente</text>
+          <text x="500" y="130">Tinaco o equipo:</text><text x="500" y="144">medida y altura</text>
+          <text x="500" y="164">Domo o hueco: contorno</text>
+          <text x="500" y="184">Zonas descubiertas:</text><text x="500" y="198">marcar "SIN LOSA"</text>
+          <text x="104" y="128" class="t-sm">tinaco</text><text x="254" y="170" class="t-sm">domo</text>
+          <text x="60" y="280" class="t-muted t-sm">La terraza de abajo queda descubierta.</text>
+        </svg>
+        <figcaption><b>Fig. 9</b>Todo lo que está sobre la última losa, con medidas y alturas. Los volados y aleros, también en un corte o fachada.</figcaption>
+      </figure>
+      <ul class="list">
+        <li>Si hay techos a distintas alturas, una planta por cada uno, o un mismo dibujo con el nivel de cada losa escrito.</li>
+        <li><b>Todo elemento debe aparecer en una planta y en un corte o fachada.</b> Un alero que solo aparece en un corte no se puede ubicar en planta.</li>
+      </ul>
+      <h3>Techos inclinados</h3>
+      <p>Si la casa tiene techo a una o dos aguas, de teja o de lámina, la planta de azotea se convierte en planta de techos y necesita más datos.</p>
+      <figure>
+        <svg viewBox="0 0 680 250" role="img" aria-label="Corte de techo a dos aguas con enrase, cumbrera, alero y pendiente, y planta de techos con cumbrera y flechas de pendiente">
+          <path class="s-ink" d="M40 210h420"/>
+          <rect class="f-ink" x="110" y="120" width="10" height="90"/><rect class="f-ink" x="370" y="120" width="10" height="90"/>
+          <path class="f-roofs" d="M70 132L245 45 420 132 420 142 245 55 70 142z" style="fill-opacity:.85"/>
+          <path class="s-lvl" d="M380 120v40h50M245 45h170"/>
+          <text x="420" y="40" class="t-lvl">cumbrera</text>
+          <text x="384" y="176" class="t-lvl">enrase de muro</text>
+          <path class="s-dim" d="M70 160h40M70 156v8M110 156v8"/><text x="66" y="176" class="t-acc">alero</text>
+          <path class="s-acc" d="M150 98l40-20"/><text x="118" y="74" class="t-acc">pendiente</text>
+          <text x="40" y="236" class="t-big">Corte: alturas y alero</text>
+          <rect class="f-roof" x="500" y="50" width="160" height="140"/><rect class="s-roof" x="500" y="50" width="160" height="140"/>
+          <path class="s-ink" d="M500 120h160"/>
+          <path class="s-acc" d="M545 110V70M539 78l6-8 6 8M615 130v40M609 162l6 8 6-8"/>
+          <text x="560" y="114" class="t-sm">cumbrera</text>
+          <text x="553" y="92" class="t-acc t-sm">baja</text><text x="623" y="156" class="t-acc t-sm">baja</text>
+          <text x="500" y="236" class="t-big">Planta de techos</text>
+        </svg>
+        <figcaption><b>Fig. 10</b>Para cada faldón: pendiente, nivel donde arranca (enrase), nivel de la cumbrera y largo del alero. En planta, las líneas de cumbrera y la dirección en que baja el agua.</figcaption>
+      </figure>
+      <ul class="list">
+        <li><b>Pendiente</b> de cada faldón, en porcentaje o en grados.</li>
+        <li><b>Nivel de enrase</b> (donde el techo se apoya en el muro) y <b>nivel de cumbrera</b> (el punto más alto).</li>
+        <li><b>Alero:</b> cuánto sobresale del muro y su espesor.</li>
+        <li>En planta: cumbreras, limatesas y limahoyas (las aristas donde se juntan los faldones) y flechas hacia donde baja el agua.</li>
+        <li>Material (teja, lámina, losa) si se quiere textura o color.</li>
+      </ul>
+    </section>
+
+    <!-- formas -->
+    <section id="formas">
+      <div class="sec-head"><span class="sec-num">10</span><h2>Formas especiales</h2></div>
+      <p>Las plantas y los cortes describen bien los volúmenes rectos. Cuando la forma se inclina, se curva o se repite en patrones, necesitamos datos extra o un modelo 3D.</p>
+      <figure>
+        <svg viewBox="0 0 680 255" role="img" aria-label="Muro inclinado con ángulo y desplome, bóveda con claro y flecha, cúpula con diámetro y altura">
+          <path class="s-ink" d="M20 200h180"/>
+          <path class="f-ink" d="M80 200h12l40-140h-12z"/>
+          <path class="s-thin" d="M80 200V60" style="stroke-dasharray:4 3"/>
+          <path class="s-dim" d="M80 160a40 40 0 0 1 11 2"/><text x="30" y="172" class="t-acc">ángulo</text>
+          <path class="s-dim" d="M80 48h40M80 44v8M120 44v8"/><text x="70" y="38" class="t-acc">desplome</text>
+          <text x="20" y="232" class="t-big">Muro inclinado</text>
+          <text x="20" y="248" class="t-muted t-sm">ángulo o cuánto se sale arriba</text>
+          <path class="s-ink" d="M240 200h200"/>
+          <rect class="f-ink" x="250" y="130" width="10" height="70"/><rect class="f-ink" x="420" y="130" width="10" height="70"/>
+          <path class="f-roofs" d="M250 130Q340 30 430 130H420Q340 46 260 130z" style="fill-opacity:.85"/>
+          <path class="s-dim" d="M260 214h160M260 210v8M420 210v8"/><text x="324" y="210" class="t-acc">claro</text>
+          <path class="s-dim" d="M340 130V80M336 130h8M336 80h8"/><text x="346" y="112" class="t-acc">flecha</text>
+          <text x="240" y="232" class="t-big">Bóveda</text>
+          <text x="240" y="248" class="t-muted t-sm">claro, flecha o radio, espesor</text>
+          <path class="s-ink" d="M470 200h200"/>
+          <rect class="s-ink" x="490" y="150" width="150" height="50"/>
+          <path class="f-roofs" d="M490 150A75 75 0 0 1 640 150z" style="fill-opacity:.85"/>
+          <path class="s-dim" d="M490 214h150M490 210v8M640 210v8"/><text x="530" y="210" class="t-acc">diámetro</text>
+          <path class="s-dim" d="M655 150V75M651 150h8M651 75h8"/><text x="604" y="70" class="t-acc">altura</text>
+          <text x="470" y="232" class="t-big">Cúpula</text>
+          <text x="470" y="248" class="t-muted t-sm">diámetro, altura, base</text>
+        </svg>
+        <figcaption><b>Fig. 11</b>Una forma que no es recta necesita sus medidas propias: ángulo, claro, flecha, radio o diámetro.</figcaption>
+      </figure>
+      <div class="tbl"><table>
+        <thead><tr><th>Forma</th><th>Datos necesarios</th></tr></thead>
+        <tbody>
+          <tr><td>Muros inclinados o en talud</td><td>Ángulo, o desplome (cuánto se sale arriba respecto a la base)</td></tr>
+          <tr><td>Bóvedas</td><td>Claro, flecha o radio, espesor y hacia dónde corre</td></tr>
+          <tr><td>Cúpulas y domos</td><td>Diámetro, altura y nivel de la base</td></tr>
+          <tr><td>Plantas curvas libres</td><td>Contorno con arcos o splines, más un corte por cada cambio de altura</td></tr>
+          <tr><td>Techos ondulados, paraboloides, formas orgánicas</td><td>Modelo 3D obligatorio (planos solos no alcanzan)</td></tr>
+          <tr><td>Muros cortina (fachadas de vidrio completas)</td><td>Retícula de parteluces (separación vertical y horizontal) y si se muestran como hueco o como vidrio</td></tr>
+          <tr><td>Celosías, pieles y lamas</td><td>Patrón, espesor, separación y profundidad</td></tr>
+          <tr><td>Buhardillas y lucarnas</td><td>Posición en el techo, ancho, alto y su propio techo</td></tr>
+          <tr><td>Estructura expuesta (armaduras, vigas, columnas metálicas)</td><td>Sección de cada pieza, separación y niveles</td></tr>
+          <tr><td>Pérgolas, palapas, velarias</td><td>Contorno, altura, sección y separación de vigas; forma de la cubierta</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- varios niveles -->
+    <section id="varios-niveles">
+      <div class="sec-head"><span class="sec-num">11</span><h2>Edificios de varios niveles</h2></div>
+      <p>En edificios con muchos niveles hay que decir qué plantas se repiten, qué atraviesa todos los niveles y cómo se quiere desarmar la maqueta.</p>
+      <figure>
+        <svg viewBox="0 0 680 300" role="img" aria-label="Edificio en corte con planta baja, plantas tipo repetidas, penthouse, cubo de luz y cubo de elevador">
+          <path class="s-ink" d="M30 270h340"/>
+          <rect class="f-sheet" x="80" y="230" width="260" height="40"/><rect class="s-ink" x="80" y="230" width="260" height="40"/>
+          <g class="s-ink"><rect class="f-sheet" x="80" y="196" width="260" height="34"/><rect class="f-sheet" x="80" y="162" width="260" height="34"/><rect class="f-sheet" x="80" y="128" width="260" height="34"/><rect class="f-sheet" x="80" y="94" width="260" height="34"/></g>
+          <rect class="f-sheet" x="80" y="60" width="170" height="34"/><rect class="s-ink" x="80" y="60" width="170" height="34"/>
+          <rect class="f-int" x="290" y="36" width="30" height="234" style="fill-opacity:.55"/><rect class="s-ink" x="290" y="36" width="30" height="234"/>
+          <rect class="s-acc" x="140" y="94" width="40" height="136" style="stroke-dasharray:5 3"/>
+          <text x="96" y="254" class="t-muted t-sm">PB</text><text x="96" y="83" class="t-muted t-sm">PH</text>
+          <path class="s-dim" d="M352 94v136M348 94h8M348 230h8"/>
+          <text x="364" y="150">Planta tipo ×4</text><text x="364" y="166" class="t-muted t-sm">niveles 2 a 5: iguales</text>
+          <text x="364" y="254">Planta baja</text>
+          <text x="364" y="81">Penthouse: su propia planta</text>
+          <path class="s-thin" d="M320 44l40-14"/><text x="364" y="32">Cubo de elevador y su remate</text>
+          <path class="s-thin" d="M160 112l-60-60"/><text x="40" y="44" class="t-acc">cubo de luz que</text><text x="40" y="58" class="t-acc">atraviesa niveles</text>
+        </svg>
+        <figcaption><b>Fig. 12</b>Una planta tipo sirve para todos los niveles iguales. Si un nivel cambia aunque sea un muro, ese nivel lleva su propia planta.</figcaption>
+      </figure>
+      <ul class="list">
+        <li><b>Lista de niveles</b> con nombre y nivel de piso de cada uno.</li>
+        <li><b>Plantas tipo:</b> qué niveles son idénticos. Cualquier diferencia (un balcón, un muro, una ventana) requiere su propia planta.</li>
+        <li><b>Lo que atraviesa niveles:</b> cubos de luz, patios, dobles alturas, ductos, elevadores y escaleras, con su remate en azotea.</li>
+        <li><b>Volúmenes separados</b> en el mismo terreno: cada uno con sus plantas, pero todos en el mismo origen.</li>
+        <li><b>Pasarelas, puentes y voladizos grandes</b>: niveles, espesor y de dónde a dónde van.</li>
+        <li><b>Para la maqueta:</b> ¿se retira cada nivel, o por grupos (por ejemplo, todos los tipo juntos)?</li>
+      </ul>
+    </section>
+
+    <!-- 10 -->
+    <section id="cortes">
+      <div class="sec-head"><span class="sec-num">12</span><h2>Cortes</h2></div>
+      <p>Mínimo dos: uno a lo largo y otro a lo ancho, cruzando toda la construcción. Agrega un corte por cada elemento especial: escalera, alberca, arcos, dobles alturas, volados o desniveles.</p>
+      <figure>
+        <svg viewBox="0 0 680 250" role="img" aria-label="Planta con líneas de corte A y B con dirección de vista y el corte resultante">
+          <rect class="s-ink" x="50" y="40" width="220" height="160"/><path class="s-ink" d="M160 40v90M160 130h110"/>
+          <path class="s-cut" d="M25 120h270"/>
+          <path class="f-acc" d="M25 120v-16l-6 8zM295 120v-16l6 8z"/>
+          <path class="s-acc" d="M25 104V96M295 104V96"/>
+          <text x="10" y="92" class="t-acc">A</text><text x="292" y="92" class="t-acc">A'</text>
+          <path class="s-cut" d="M210 20v200"/><text x="216" y="18" class="t-acc">B</text><text x="216" y="236" class="t-acc">B'</text>
+          <text x="50" y="246" class="t-muted t-sm">Las flechas indican hacia dónde se mira.</text>
+          <text x="360" y="30" class="t-big">Corte A-A'</text>
+          <path class="s-ink" d="M340 210h320"/>
+          <rect class="f-ink" x="370" y="70" width="8" height="140"/><rect class="f-ink" x="620" y="70" width="8" height="140"/>
+          <rect class="f-int" x="490" y="140" width="6" height="70"/>
+          <rect x="378" y="130" width="242" height="10" fill="url(#hatch)"/><rect class="s-ink" x="378" y="130" width="242" height="10"/>
+          <rect x="378" y="70" width="242" height="10" fill="url(#hatch)"/><rect class="s-ink" x="378" y="70" width="242" height="10"/>
+          <rect class="f-win" x="560" y="155" width="40" height="35"/><rect class="s-win" x="560" y="155" width="40" height="35"/>
+          <path class="s-dim" d="M645 140v70M641 140h8M641 210h8"/><text x="540" y="232" class="t-acc">alturas acotadas</text>
+        </svg>
+        <figcaption><b>Fig. 13</b>Marca en planta dónde pasa cada corte y hacia dónde se mira.</figcaption>
+      </figure>
+      <p>Cada corte debe acotar:</p>
+      <ul class="list">
+        <li>Terreno ±0.00 y el piso de cada local cortado.</li>
+        <li>Lecho bajo, espesor y lecho alto de cada losa.</li>
+        <li>Altura de cada muro cortado y su remate (pretil).</li>
+        <li>Dinteles sobre los vanos, y antepecho y alto de cada ventana cortada.</li>
+        <li>Escaleras: huella, peralte, número de escalones y descansos.</li>
+        <li>Alberca: profundidad en cada extremo.</li>
+        <li>Volados y aleros: largo, espesor y pendiente.</li>
+      </ul>
+    </section>
+
+    <!-- 11 -->
+    <section id="fachadas">
+      <div class="sec-head"><span class="sec-num">13</span><h2>Fachadas</h2></div>
+      <p>Las <b>cuatro</b>. Cada fachada que falta deja sin altura a todas las ventanas de ese lado.</p>
+      <figure>
+        <svg viewBox="0 0 680 370" role="img" aria-label="Planta al centro con las cuatro fachadas alrededor, cada una del mismo ancho que la planta">
+          <rect class="s-ink" x="290" y="145" width="140" height="100"/><text x="330" y="200" class="t-muted">PLANTA</text>
+          <path class="s-thin" d="M290 113v32M430 113v32M290 245v32M430 245v32" style="stroke-dasharray:3 3"/>
+          <rect class="s-ink" x="290" y="40" width="140" height="73"/><rect class="s-win" x="305" y="60" width="40" height="30"/><rect class="s-win" x="370" y="60" width="40" height="30"/>
+          <text x="330" y="32" class="t-big">NORTE</text>
+          <rect class="s-ink" x="290" y="277" width="140" height="73"/><rect class="s-win" x="335" y="297" width="50" height="35"/>
+          <text x="335" y="366" class="t-big">SUR</text>
+          <rect class="s-ink" x="120" y="160" width="100" height="73"/><rect class="s-win" x="150" y="180" width="40" height="25"/>
+          <text x="148" y="250" class="t-big">OESTE</text>
+          <rect class="s-ink" x="500" y="160" width="100" height="73"/><rect class="s-win" x="525" y="175" width="20" height="40"/><rect class="s-win" x="560" y="185" width="20" height="20"/>
+          <text x="532" y="250" class="t-big">ESTE</text>
+          <path class="s-acc" d="M230 196h50M272 190l8 6-8 6M490 196h-50M448 190l-8 6 8 6"/>
+          <text x="470" y="128" class="t-acc t-sm">mismo ancho</text><text x="470" y="140" class="t-acc t-sm">que la planta</text>
+        </svg>
+        <figcaption><b>Fig. 14</b>Norte, sur, este y oeste. Si una fachada mide distinto que la planta, no se puede usar para ubicar ventanas.</figcaption>
+      </figure>
+      <ul class="list">
+        <li>Mismo ancho y misma escala que la planta. Revísalo midiendo las dos.</li>
+        <li>Terreno ±0.00, piso terminado, altura total y remate.</li>
+        <li>Antepecho y alto de <b>cada</b> ventana, con su ID.</li>
+        <li>Barandales: altura y tipo (vidrio, herrería o macizo).</li>
+        <li>Materiales, si quieres colores o texturas en la maqueta.</li>
+        <li><b>Elementos en relieve:</b> cornisas, marcos, parteluces, celosías, repisones, con cuánto sobresalen y su espesor. A 1:200, lo que sobresale menos de 4 cm reales (0.2 mm en la maqueta) no se nota y se omite.</li>
+        <li><b>Instalaciones que se ven:</b> paneles solares, aires acondicionados, tinacos, chimeneas, antenas.</li>
+        <li>Escribe desde dónde se ve: "Fachada norte, vista desde el norte".</li>
+      </ul>
+    </section>
+
+    <!-- 12 -->
+    <section id="escaleras">
+      <div class="sec-head"><span class="sec-num">14</span><h2>Escaleras</h2></div>
+      <figure>
+        <svg viewBox="0 0 680 250" role="img" aria-label="Escalera en planta con flecha SUBE y perfil con huella y peralte">
+          <rect class="s-ink" x="40" y="70" width="260" height="80"/>
+          <g class="s-thin"><path d="M66 70v80M92 70v80M118 70v80M144 70v80M170 70v80M196 70v80M222 70v80M248 70v80M274 70v80"/></g>
+          <path class="s-acc" d="M50 110h236"/><path class="f-acc" d="M296 110l-12-7v14z"/>
+          <circle class="f-acc" cx="50" cy="110" r="4"/>
+          <text x="54" y="100" class="t-acc">SUBE</text>
+          <text x="40" y="180" class="t-big">Planta: flecha SUBE</text>
+          <text x="40" y="196" class="t-muted t-sm">desde el primer escalón hacia arriba</text>
+          <path class="s-ink" d="M360 210h30v-18h26v-18h26v-18h26v-18h26v-18h26v-18h26v-18h26v-18h40"/>
+          <path class="s-thin" d="M360 210h300M360 58h300" style="stroke-dasharray:4 3"/>
+          <text x="560" y="226" class="t-lvl">nivel de arranque</text><text x="560" y="52" class="t-lvl">nivel de llegada</text>
+          <path class="s-dim" d="M416 222h26M416 218v8M442 218v8"/><text x="414" y="240" class="t-acc">huella</text>
+          <path class="s-dim" d="M460 156v18M456 156h8M456 174h8"/><text x="468" y="170" class="t-acc">peralte</text>
+        </svg>
+        <figcaption><b>Fig. 15</b>Sin flecha SUBE no se sabe de qué lado arranca la escalera.</figcaption>
+      </figure>
+      <div class="tbl"><table>
+        <thead><tr><th>Dato</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>Nivel de arranque y de llegada</td><td class="num">+1.00 → +4.00</td></tr>
+          <tr><td>Número de peraltes</td><td class="num">20</td></tr>
+          <tr><td>Peralte y huella</td><td class="num">0.15 / 0.28</td></tr>
+          <tr><td>Ancho</td><td class="num">1.00</td></tr>
+          <tr><td>Forma y descansos</td><td>En U, un descanso a +2.50</td></tr>
+          <tr><td>Barandal</td><td>0.90 de alto, herrería</td></tr>
+          <tr><td>Hueco en la losa</td><td>Polilínea en <code>MQ-HUECO-LOSA</code></td></tr>
+        </tbody>
+      </table></div>
+      <h3>Escaleras de caracol, curvas y especiales</h3>
+      <figure>
+        <svg viewBox="0 0 680 220" role="img" aria-label="Escalera de caracol en planta con escalones radiales, columna central, radio y flecha SUBE">
+          <circle class="s-ink" cx="130" cy="110" r="80"/><circle class="f-ink" cx="130" cy="110" r="15"/>
+          <g class="s-thin"><path d="M145 110H210M143 117.5L199.3 150M137.5 123L170 179.3M130 125V190M122.5 123L90 179.3M117 117.5L60.7 150M115 110H50M117 102.5L60.7 70M122.5 97L90 40.7M130 95V30M137.5 97L170 40.7M143 102.5L199.3 70"/></g>
+          <path class="s-acc" d="M180 110A50 50 0 1 1 130 60"/><path class="f-acc" d="M139 60l-10-5v10z"/>
+          <circle class="f-acc" cx="180" cy="110" r="3"/><text x="186" y="126" class="t-acc">SUBE</text>
+          <path class="s-dim" d="M130 110L186.6 53.4"/><text x="190" y="48" class="t-acc">radio exterior</text>
+          <text x="40" y="212" class="t-muted t-sm">columna central: diámetro</text>
+          <text x="300" y="50">Radio exterior y radio de la columna</text>
+          <text x="300" y="74">Giro total (por ejemplo 360° o 270°)</text>
+          <text x="300" y="98">Número de escalones y peralte</text>
+          <text x="300" y="122">Sentido: horario o antihorario, con flecha SUBE</text>
+          <text x="300" y="146">Nivel y posición del primer y último escalón</text>
+          <text x="300" y="170">Barandal: altura y si va por fuera o por dentro</text>
+        </svg>
+        <figcaption><b>Fig. 16</b>Una escalera de caracol se define por radios, giro, número de escalones y sentido.</figcaption>
+      </figure>
+      <ul class="list">
+        <li><b>Escaleras curvas o en abanico:</b> el contorno de cada escalón en planta, con su nivel.</li>
+        <li><b>Escaleras flotantes o voladas:</b> espesor de cada huella y de qué muro salen.</li>
+        <li><b>Escaleras exteriores y gradas:</b> igual que las interiores, con el nivel del terreno donde arrancan.</li>
+      </ul>
+    </section>
+
+    <!-- 13 -->
+    <section id="exteriores">
+      <div class="sec-head"><span class="sec-num">15</span><h2>Alberca y exteriores</h2></div>
+      <figure>
+        <svg viewBox="0 0 680 240" role="img" aria-label="Corte de alberca con borde, espejo de agua, escalones y profundidades">
+          <path class="s-ink" d="M20 60h80M580 60h80"/>
+          <path class="f-water" d="M100 68v22h22v20h22v20l220 50h216V68z"/>
+          <path class="s-ink" d="M100 60v30h22v20h22v20l220 50h216V60"/>
+          <path class="s-win" d="M100 68h480" style="stroke-dasharray:6 3"/>
+          <text x="20" y="52" class="t-lvl">borde +1.00</text>
+          <text x="440" y="84" style="fill:var(--c-win)">espejo de agua +0.95</text>
+          <text x="150" y="206" class="t-sm">escalones interiores</text><path class="s-thin" d="M160 196l-24-62"/>
+          <path class="s-dim" d="M90 68v62M86 130h8"/><text x="18" y="104" class="t-acc">mínima</text>
+          <path class="s-dim" d="M600 68v112M596 180h8"/><text x="608" y="128" class="t-acc">máxima</text>
+          <text x="20" y="225" class="t-muted t-sm">Profundidades medidas desde el espejo de agua o desde el borde: indica cuál.</text>
+        </svg>
+        <figcaption><b>Fig. 17</b>Si el fondo tiene pendiente, da la profundidad en cada extremo y dónde cambia.</figcaption>
+      </figure>
+      <ul class="list">
+        <li><b>Alberca:</b> contorno, nivel del borde y del agua, profundidades, escalones o bancas interiores, ancho del borde. Indica si quieres simular el agua (acetato o resina).</li>
+        <li><b>Terrazas y decks:</b> contorno, nivel, escalones con número, huella y peralte.</li>
+        <li><b>Albercas especiales:</b> de desborde (borde perdido): qué borde desborda, canal de recolección y su nivel. Carriles, bancas, cascadas.</li>
+        <li><b>Jacuzzi, espejos de agua y fuentes:</b> contorno, nivel del borde y profundidad.</li>
+        <li><b>Azoteas y jardineras verdes:</b> contorno y espesor de tierra (o nivel final del jardín).</li>
+        <li><b>Asadores, fogateros, bancas fijas, barras exteriores:</b> contorno y altura.</li>
+        <li><b>Vegetación, autos, personas:</b> di si se incluyen, cuántos y dónde.</li>
+      </ul>
+    </section>
+
+    <!-- terreno -->
+    <section id="terreno">
+      <div class="sec-head"><span class="sec-num">16</span><h2>Terreno y contexto</h2></div>
+      <p>Si el terreno no es plano, la base de la maqueta deja de ser una placa y se vuelve una pieza con forma. Necesitamos la topografía y cómo se asienta la casa sobre ella.</p>
+      <figure>
+        <svg viewBox="0 0 680 285" role="img" aria-label="Corte de terreno con pendiente, plataformas, muro de contención y talud; planta topográfica con curvas de nivel, vecino y calle">
+          <path class="s-thin" d="M20 245L420 125" style="stroke-dasharray:5 4"/>
+          <path class="s-ink" d="M20 235H170V195H296M306 150H330L420 122"/>
+          <rect class="f-ink" x="296" y="150" width="10" height="45"/>
+          <rect class="f-sheet" x="185" y="135" width="95" height="60"/><rect class="s-ink" x="185" y="135" width="95" height="60"/>
+          <text x="24" y="228" class="t-lvl">+0.00</text><text x="190" y="128" class="t-lvl">+1.20</text>
+          <text x="40" y="262" class="t-muted t-sm">terreno natural (punteado)</text>
+          <path class="s-thin" d="M300 148l-14-30"/><text x="238" y="112" class="t-sm">muro de contención</text>
+          <text x="352" y="150" class="t-sm">talud</text>
+          <text x="20" y="282" class="t-big">Corte del terreno</text>
+          <rect class="s-thin" x="470" y="30" width="190" height="200"/>
+          <g class="s-lvl"><path d="M470 70C520 58 600 86 660 66M470 105C525 92 600 120 660 100M470 140C530 128 600 152 660 136M470 175C530 166 600 186 660 172M470 210C530 202 600 220 660 208"/></g>
+          <text x="474" y="64" class="t-lvl t-sm">103.00</text><text x="474" y="134" class="t-lvl t-sm">102.00</text><text x="474" y="204" class="t-lvl t-sm">101.00</text>
+          <rect class="f-int" x="600" y="40" width="50" height="45" style="fill-opacity:.6"/><text x="604" y="98" class="t-sm">vecino h≈6</text>
+          <rect class="f-sheet" x="540" y="120" width="60" height="50"/><rect class="s-ink" x="540" y="120" width="60" height="50"/>
+          <rect class="f-wall" x="470" y="236" width="190" height="20"/><text x="530" y="250" class="t-sm">calle ±0.00</text>
+          <text x="470" y="282" class="t-big">Planta topográfica</text>
+        </svg>
+        <figcaption><b>Fig. 18</b>Curvas de nivel con su cota, cómo se corta o rellena el terreno, y lo que hay alrededor si se quiere incluir.</figcaption>
+      </figure>
+      <ul class="list">
+        <li><b>Límite de la maqueta:</b> polilínea cerrada con exactamente lo que entra.</li>
+        <li><b>Topografía:</b> curvas de nivel con su cota (cada 0.50 o 1.00 m) o una malla de puntos de nivel. Indica si el terreno se deja natural o se modifica.</li>
+        <li><b>Plataformas:</b> contorno y nivel de cada superficie plana (patios, estacionamiento, jardines).</li>
+        <li><b>Muros de contención:</b> trazo, espesor, nivel de corona y de desplante.</li>
+        <li><b>Taludes:</b> dónde empiezan, dónde terminan y su pendiente.</li>
+        <li><b>Bardas y colindancias:</b> trazo, espesor y altura de cada tramo.</li>
+        <li><b>Calle y banqueta:</b> ancho, nivel y guarnición, si se incluyen.</li>
+        <li><b>Construcciones vecinas:</b> si se incluyen, como volúmenes sencillos: contorno y altura aproximada.</li>
+        <li><b>Árboles existentes</b> que se conservan: posición, diámetro de copa y altura.</li>
+      </ul>
+    </section>
+
+    <!-- 14 -->
+    <section id="mobiliario">
+      <div class="sec-head"><span class="sec-num">17</span><h2>Mobiliario</h2></div>
+      <p>Elige una de dos opciones. En las dos, los muebles salen como volúmenes sencillos: a escala 1:200 una cama mide 1 cm y una silla 2 mm, así que patas y respaldos delgados no se imprimen.</p>
+      <figure>
+        <svg viewBox="0 0 680 200" role="img" aria-label="Bloques de mobiliario en planta con nombre, medidas y altura">
+          <rect class="f-furn" x="40" y="40" width="110" height="120"/><rect class="s-furn" x="40" y="40" width="110" height="120"/>
+          <rect class="s-thin" x="52" y="48" width="38" height="20"/><rect class="s-thin" x="100" y="48" width="38" height="20"/>
+          <text x="40" y="180">CAMA-KING</text><text x="40" y="194" class="t-muted t-sm">2.00 × 1.90 · ALTURA 0.50</text>
+          <rect class="f-furn" x="230" y="90" width="150" height="50"/><rect class="s-furn" x="230" y="90" width="150" height="50"/><path class="s-thin" d="M230 105h150"/>
+          <text x="230" y="180">SOFA-3P</text><text x="230" y="194" class="t-muted t-sm">2.20 × 0.90 · ALTURA 0.80</text>
+          <rect class="f-furn" x="470" y="70" width="140" height="70"/><rect class="s-furn" x="470" y="70" width="140" height="70"/>
+          <g class="s-thin"><rect x="485" y="52" width="22" height="16"/><rect x="530" y="52" width="22" height="16"/><rect x="575" y="52" width="22" height="16"/>
+          <rect x="485" y="142" width="22" height="16"/><rect x="530" y="142" width="22" height="16"/><rect x="575" y="142" width="22" height="16"/></g>
+          <text x="470" y="180">COMEDOR-6</text><text x="470" y="194" class="t-muted t-sm">mesa 0.75 · sillas 0.45</text>
+        </svg>
+        <figcaption><b>Fig. 19</b>Bloque con nombre claro y altura. Los closets y barras de cocina también como bloque, no como líneas sueltas.</figcaption>
+      </figure>
+      <div class="tiers">
+        <div class="tier"><span class="tag">Opción A</span><h3>Investigar</h3><p>Cada mueble como bloque con su contorno real en planta y su altura (dato <code>ALTURA</code> o tabla de mobiliario). Resultado: mobiliario fiel al proyecto.</p></div>
+        <div class="tier"><span class="tag">Opción B</span><h3>Especular</h3><p>Basta con el nombre de cada local. Proponemos muebles proporcionados al cuarto con alturas típicas: cama 0.50, sofá 0.80, mesa 0.75, barra 0.90, refrigerador 1.80, closet 2.20.</p></div>
+      </div>
+    </section>
+
+    <!-- escalas -->
+    <section id="escalas">
+      <div class="sec-head"><span class="sec-num">18</span><h2>Qué se ve a cada escala</h2></div>
+      <p>La escala decide qué detalles sobreviven. Una impresora de boquilla 0.4 mm no imprime bien nada más delgado que 1.2 mm. Lo que quede por debajo se engrosa, se simplifica o se omite.</p>
+      <figure>
+        <svg viewBox="0 0 680 230" role="img" aria-label="Un muro de 15 centímetros a escala 1:50, 1:100, 1:200 y 1:500 comparado con el mínimo imprimible de 1.2 milímetros">
+          <text x="20" y="22" class="t-muted t-sm">Muro de 0.15 m dibujado 20 veces más grande. Contorno punteado: mínimo imprimible (1.2 mm)</text>
+          <g transform="translate(70 0)"><rect class="s-thin" x="-12" y="40" width="24" height="110" style="stroke-dasharray:3 3"/><rect class="f-ink" x="-30" y="40" width="60" height="110"/>
+            <text x="-16" y="172" class="t-big">1:50</text><text x="-40" y="188" class="t-sm">3.0 mm</text><text x="-40" y="204" class="t-good t-sm">se imprime tal cual</text></g>
+          <g transform="translate(240 0)"><rect class="s-thin" x="-12" y="40" width="24" height="110" style="stroke-dasharray:3 3"/><rect class="f-ink" x="-15" y="40" width="30" height="110"/>
+            <text x="-20" y="172" class="t-big">1:100</text><text x="-40" y="188" class="t-sm">1.5 mm</text><text x="-40" y="204" class="t-good t-sm">se imprime tal cual</text></g>
+          <g transform="translate(410 0)"><rect class="s-thin" x="-12" y="40" width="24" height="110" style="stroke-dasharray:3 3"/><rect class="f-ink" x="-7.5" y="40" width="15" height="110"/>
+            <text x="-20" y="172" class="t-big">1:200</text><text x="-40" y="188" class="t-sm">0.75 mm</text><text x="-40" y="204" class="t-acc t-sm">se engrosa a 1.2 mm</text></g>
+          <g transform="translate(580 0)"><rect class="s-thin" x="-12" y="40" width="24" height="110" style="stroke-dasharray:3 3"/><rect class="f-ink" x="-3" y="40" width="6" height="110"/>
+            <text x="-20" y="172" class="t-big">1:500</text><text x="-40" y="188" class="t-sm">0.3 mm</text><text x="-40" y="204" class="t-bad t-sm">solo volumen exterior</text></g>
+        </svg>
+        <figcaption><b>Fig. 20</b>El mismo muro a cuatro escalas. A 1:500 los muros interiores ya no se pueden imprimir y la maqueta se vuelve volumétrica.</figcaption>
+      </figure>
+      <div class="tbl"><table>
+        <thead><tr><th>Escala</th><th>1 m real</th><th>Muro de 0.15</th><th>Qué se alcanza a ver</th><th>Largo máximo en cama de 25.6 cm</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1:50</td><td class="num">20 mm</td><td class="num">3.0 mm</td><td>Marcos, escalones, muebles con forma, barandales</td><td class="num">12.8 m</td></tr>
+          <tr><td class="num">1:100</td><td class="num">10 mm</td><td class="num">1.5 mm</td><td>Muros reales, escalones, muebles sencillos</td><td class="num">25.6 m</td></tr>
+          <tr><td class="num">1:200</td><td class="num">5 mm</td><td class="num">0.75 mm</td><td>Muros engrosados, muebles como bloques</td><td class="num">51.2 m</td></tr>
+          <tr><td class="num">1:500</td><td class="num">2 mm</td><td class="num">0.3 mm</td><td>Solo volúmenes, sin interiores</td><td class="num">128 m</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Elementos delicados</h3>
+      <p>Barandales, columnas delgadas, pérgolas, celosías, antenas y parteluces suelen quedar por debajo del mínimo. Para cada uno se elige:</p>
+      <ul class="list">
+        <li><b>Engrosar:</b> se imprime, pero más grueso que lo real.</li>
+        <li><b>Simplificar:</b> por ejemplo, un barandal de herrería como placa maciza.</li>
+        <li><b>Omitir:</b> no aparece en la maqueta.</li>
+        <li><b>Pieza aparte en otro material:</b> acetato, alambre, palitos de madera.</li>
+      </ul>
+      <p>Si el proyecto no cabe en la impresora a la escala pedida, se divide en piezas que se unen, o se reduce la escala. Indica qué prefieres en los datos de la maqueta.</p>
+    </section>
+
+    <!-- 15 -->
+    <section id="tablas">
+      <div class="sec-head"><span class="sec-num">19</span><h2>Tablas</h2></div>
+      <p>Las tablas resuelven en un solo lugar lo que de otro modo hay que buscar en varias láminas. Los renglones son ejemplos de cómo llenarlas.</p>
+      <h3>Tabla de cancelería (ventanas)</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>ID</th><th>Tipo</th><th>Nivel</th><th>Local</th><th>Muro</th><th>Ancho</th><th>Alto</th><th>Antepecho</th><th>Material</th></tr></thead>
+        <tbody>
+          <tr><td class="num">V-01</td><td>Corrediza</td><td>PB</td><td>Sala</td><td>Norte</td><td class="num">4.00</td><td class="num">2.40</td><td class="num">0.00</td><td>Vidrio</td></tr>
+          <tr><td class="num">V-02</td><td>Fija</td><td>PB</td><td>Baño</td><td>Este</td><td class="num">0.60</td><td class="num">0.40</td><td class="num">1.70</td><td>Vidrio</td></tr>
+          <tr><td class="num">V-03</td><td>Abatible</td><td>PA</td><td>Recámara</td><td>Oeste</td><td class="num">1.40</td><td class="num">1.30</td><td class="num">0.90</td><td>Vidrio</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Tabla de puertas</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>ID</th><th>Nivel</th><th>De → a</th><th>Ancho libre</th><th>Alto</th><th>Tipo</th></tr></thead>
+        <tbody>
+          <tr><td class="num">P-01</td><td>PB</td><td>Exterior → vestíbulo</td><td class="num">1.20</td><td class="num">2.40</td><td>Doble abatible</td></tr>
+          <tr><td class="num">P-02</td><td>PB</td><td>Pasillo → baño</td><td class="num">0.80</td><td class="num">2.10</td><td>Abatible</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Tabla de niveles</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Elemento</th><th>Nivel</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td>Terreno natural</td><td class="num">±0.00</td><td>Referencia de toda la obra</td></tr>
+          <tr><td>Piso planta baja</td><td class="num">+1.00</td><td></td></tr>
+          <tr><td>Lecho bajo de entrepiso</td><td class="num">+3.70</td><td>Losa de 0.30</td></tr>
+          <tr><td>Piso planta alta</td><td class="num">+4.00</td><td></td></tr>
+          <tr><td>Lecho bajo / alto de azotea</td><td class="num">+6.60 / +6.90</td><td></td></tr>
+          <tr><td>Remate de pretil</td><td class="num">+7.00</td><td>Pretil de 0.10</td></tr>
+          <tr><td>Fondo de alberca</td><td class="num">−1.50</td><td>Parte más honda</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Tablas opcionales</h3>
+      <ul class="list">
+        <li><b>Mobiliario:</b> bloque, local, largo, ancho, alto.</li>
+        <li><b>Acabados:</b> superficie, material, color para la maqueta y si lleva relieve.</li>
+      </ul>
+    </section>
+
+    <!-- faltantes -->
+    <section id="faltantes">
+      <div class="sec-head"><span class="sec-num">20</span><h2>Si algo falta o no coincide</h2></div>
+      <p>Siempre puede faltar algo. Para que eso no detenga el trabajo, estas son las reglas que usamos.</p>
+      <h3>Cuando dos datos se contradicen, gana el de más arriba</h3>
+      <ol class="list">
+        <li>Lo que escribas explícitamente: notas, correos, el formulario de esta guía.</li>
+        <li>Las tablas: cancelería, puertas, niveles, mobiliario.</li>
+        <li>Las cotas escritas en los planos.</li>
+        <li>La geometría dibujada en el DWG, medida directamente.</li>
+        <li>Los cortes y las fachadas.</li>
+        <li>Los PDF, renders y fotos.</li>
+      </ol>
+      <h3>Valores por defecto</h3>
+      <p>Si un dato no viene en ningún lado, usamos este valor. Si alguno no aplica a tu proyecto, corrígelo en el formulario.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Dato faltante</th><th>Valor que usamos</th></tr></thead>
+        <tbody>
+          <tr><td>Altura de puerta</td><td class="num">2.10 m</td></tr>
+          <tr><td>Ancho de puerta interior / de acceso</td><td class="num">0.90 / 1.00 m</td></tr>
+          <tr><td>Antepecho y alto de ventana normal</td><td class="num">0.90 m / 1.20 m (cerramiento a 2.10)</td></tr>
+          <tr><td>Ventana de baño</td><td class="num">antepecho 1.50 m, alto 0.60 m</td></tr>
+          <tr><td>Ventana de 2.00 m de ancho o más</td><td class="num">de piso a 2.40 m</td></tr>
+          <tr><td>Altura libre de piso a losa</td><td class="num">2.60 m</td></tr>
+          <tr><td>Espesor de losa</td><td class="num">0.15 m</td></tr>
+          <tr><td>Pretil de azotea</td><td class="num">0.30 m sobre la losa</td></tr>
+          <tr><td>Barandal</td><td class="num">0.90 m interior, 1.00 m exterior, macizo</td></tr>
+          <tr><td>Escalones</td><td class="num">peralte 0.18 m, huella 0.28 m</td></tr>
+          <tr><td>Piso de planta baja sobre el terreno</td><td class="num">+0.15 m</td></tr>
+          <tr><td>Profundidad de alberca</td><td class="num">1.40 m, fondo plano</td></tr>
+          <tr><td>Terreno</td><td>Plano a ±0.00</td></tr>
+          <tr><td>Mobiliario</td><td>Especulado, como bloques</td></tr>
+          <tr><td>Ventanas</td><td>Hueco abierto</td></tr>
+          <tr><td>Elementos delicados</td><td>Se engrosan al mínimo imprimible</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Antes de imprimir</h3>
+      <p>Te enviamos el modelo 3D para que lo revises (girarlo, separar los niveles) junto con la <b>lista de todo lo que supusimos</b>. Se imprime cuando lo apruebas. Los cambios después de aprobar implican volver a imprimir.</p>
+    </section>
+
+    <!-- 16 -->
+    <section id="errores">
+      <div class="sec-head"><span class="sec-num">21</span><h2>Errores frecuentes</h2></div>
+      <p>Cada uno de estos obliga a hacer preguntas o a suponer medidas.</p>
+      <div class="errors">
+        <div class="err"><div><span class="k no">Así no</span>El archivo dice que está en milímetros, pero las medidas están en metros.</div><div><span class="k si">Así sí</span>Unidades configuradas en metros (<code>INSUNITS = 6</code>).</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Todo dibujado en la capa <code>0</code>.</div><div><span class="k si">Así sí</span>Capas <code>MQ-</code> separadas por elemento y nivel.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Una fachada mide 15.61 m y la planta 16.16 m.</div><div><span class="k si">Así sí</span>Fachada y planta del mismo ancho, verificado.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>La altura total es 7.00 en fachadas y 7.10 en el corte.</div><div><span class="k si">Así sí</span>Un solo valor, el mismo en todas las vistas.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Un alero aparece en un corte pero en ninguna planta ni fachada.</div><div><span class="k si">Así sí</span>Cada elemento en una planta y en una vista vertical.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Una puerta se ve en la fachada pero no está en la planta.</div><div><span class="k si">Así sí</span>Cada vano en planta, fachada y tabla, con el mismo ID.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Solo dos fachadas: no hay altura para las ventanas de los otros lados.</div><div><span class="k si">Así sí</span>Las cuatro fachadas, o la tabla de cancelería completa.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>No hay planta de azotea.</div><div><span class="k si">Así sí</span>Planta de azotea con losas, pretiles y volados.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>La escalera no tiene flecha SUBE.</div><div><span class="k si">Así sí</span>Flecha SUBE desde el primer escalón.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Un balcón de planta alta rotulado con el nivel de planta baja.</div><div><span class="k si">Así sí</span>Revisar cada texto de nivel contra su planta.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>La planta alta dibujada a un lado de la baja sin decir cuánto se movió.</div><div><span class="k si">Así sí</span>Plantas en el mismo origen, o desplazamiento escrito.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Partes del dibujo vacías porque eran referencias externas (XREF) que no se enviaron.</div><div><span class="k si">Así sí</span>XREF enlazadas con <code>BIND</code> o todo enviado con <code>ETRANSMIT</code>.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Los planos eran de una versión anterior y la obra ya cambió.</div><div><span class="k si">Así sí</span>Planos con fecha y versión: la última aprobada.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>El terreno tiene pendiente, pero la planta no trae curvas de nivel.</div><div><span class="k si">Así sí</span>Curvas o puntos de nivel, plataformas y muros de contención.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Una planta tipo para cinco niveles, pero uno de ellos tiene un balcón distinto.</div><div><span class="k si">Así sí</span>Cada nivel que cambia, con su propia planta.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Bloques de ventanas explotados o escalados, que ya no dicen su ancho real.</div><div><span class="k si">Así sí</span>Bloques sin explotar y a escala 1 en X y en Y.</div></div>
+        <div class="err"><div><span class="k no">Así no</span>Una cubierta curva o un muro inclinado dibujado solo en planta.</div><div><span class="k si">Así sí</span>Sus medidas propias (ángulo, flecha, radio) o un modelo 3D.</div></div>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section id="entrega">
+      <div class="sec-head"><span class="sec-num">22</span><h2>Niveles de entrega</h2></div>
+      <div class="tiers">
+        <div class="tier"><span class="tag">Mínima</span><h3>Modela bien lo general</h3>
+          <ul><li>DWG con plantas, 2 cortes y 4 fachadas</li><li>Planta de azotea</li><li>Tabla de niveles</li></ul>
+          <p>Planta y alturas generales exactas. Se suponen detalles menores (dinteles, muebles).</p></div>
+        <div class="tier rec"><span class="tag">Recomendada</span><h3>Sin preguntas</h3>
+          <ul><li>Todo lo de la mínima</li><li>Capas <code>MQ-</code></li><li>Vanos con datos o tabla de cancelería</li><li>Flecha SUBE y niveles por zona</li><li>Contacto para dudas técnicas</li></ul>
+          <p>Modelo exacto sin rondas de preguntas.</p></div>
+        <div class="tier"><span class="tag">Ideal</span><h3>Fiel en todo</h3>
+          <ul><li>Todo lo de la recomendada</li><li>Tabla de mobiliario y de acabados</li><li>Modelo 3D o IFC de referencia</li><li>Renders o fotos de la obra</li></ul>
+          <p>Exacto, con colores y muebles fieles, y verificable contra el 3D.</p></div>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section id="brief">
+      <div class="sec-head"><span class="sec-num">23</span><h2>Datos de la maqueta</h2></div>
+      <p>Esto no es de la casa, sino de la maqueta. Llénalo y mándalo junto con los planos.</p>
+      <div class="form">
+        <h3>Proyecto</h3>
+        <div class="fgrid">
+          <div class="field"><label>Nombre del proyecto</label><div class="line"></div></div>
+          <div class="field"><label>Fecha de entrega deseada</label><div class="line"></div></div>
+          <div class="field"><label>Versión y fecha de los planos</label><div class="line"></div></div>
+          <div class="field"><label>Contacto para dudas técnicas (nombre y teléfono)</label><div class="line"></div></div>
+          <div class="field"><label>Uso de la maqueta</label><div class="opts"><span>Venta / exhibición</span><span>Presentación</span><span>Concurso</span><span>Estudio</span></div></div>
+          <div class="field"><label>Qué debe verse al abrirla</label><div class="line"></div></div>
+        </div>
+        <h3>Escala e impresión</h3>
+        <div class="fgrid">
+          <div class="field"><label>Escala (1:200 → 1 cm = 2 m)</label><div class="line"></div></div>
+          <div class="field"><label>O tamaño máximo de la maqueta (cm)</label><div class="line"></div></div>
+          <div class="field"><label>Impresora y boquilla</label><div class="line"></div></div>
+          <div class="field"><label>Material</label><div class="opts"><span>PLA</span><span>PETG</span><span>Resina</span></div></div>
+          <div class="field"><label>Colores</label><div class="line"></div></div>
+        </div>
+        <h3>Piezas y alcance</h3>
+        <div class="fgrid">
+          <div class="field"><label>Partes que se quitan</label><div class="opts"><span>Azotea</span><span>Cada nivel</span><span>Ninguna</span></div></div>
+          <div class="field"><label>Techos</label><div class="opts"><span>Encajados entre muros</span><span>Apoyados encima</span></div></div>
+          <div class="field"><label>Alcance</label><div class="opts"><span>Solo la casa</span><span>Casa + alberca y terrazas</span><span>Terreno completo</span></div></div>
+          <div class="field"><label>Incluir</label><div class="opts"><span>Autos</span><span>Árboles</span><span>Bardas</span><span>Personas</span><span>Vecinos</span><span>Calle</span></div></div>
+          <div class="field"><label>Terreno</label><div class="opts"><span>Con su pendiente real</span><span>Plano</span></div></div>
+          <div class="field"><label>Edificios de varios niveles: se retira</label><div class="opts"><span>Cada nivel</span><span>Por grupos</span><span>Solo azotea</span></div></div>
+          <div class="field"><label>Si no cabe en la impresora</label><div class="opts"><span>Dividir en piezas</span><span>Reducir la escala</span></div></div>
+          <div class="field"><label>Elementos delicados (barandales, pérgolas)</label><div class="opts"><span>Engrosar</span><span>Simplificar</span><span>Omitir</span><span>Otro material</span></div></div>
+        </div>
+        <h3>Detalle</h3>
+        <div class="fgrid">
+          <div class="field"><label>Ventanas</label><div class="opts"><span>Hueco abierto</span><span>Vidrio simulado</span><span>Acetato</span></div></div>
+          <div class="field"><label>Mobiliario</label><div class="opts"><span>Investigar</span><span>Especular</span><span>Sin muebles</span></div></div>
+          <div class="field"><label>Texturas (piedra, madera)</label><div class="opts"><span>En relieve</span><span>Solo color</span><span>No</span></div></div>
+          <div class="field"><label>Base</label><div class="opts"><span>Maciza</span><span>Hueca</span><span>Con rotulación</span></div></div>
+        </div>
+        <div class="field"><label>Notas y elementos especiales (arcos, volados, pérgolas…)</label><div class="line"></div><div class="line"></div></div>
+      </div>
+    </section>
+
+    <!-- 19 -->
+    <section id="revision">
+      <div class="sec-head"><span class="sec-num">24</span><h2>Revisión final antes de enviar</h2></div>
+      <ul class="check">
+        <li>Un solo DWG o DXF, en metros, todo en Model Space, más PDF de respaldo.</li>
+        <li>Referencias externas (XREF) incluidas en el archivo.</li>
+        <li>Fecha y versión de los planos, y contacto para dudas técnicas.</li>
+        <li>Plantas con norte arriba y en el mismo origen (o desplazamiento escrito).</li>
+        <li>Muros en capas EXT e INT, como polilíneas cerradas, sin huecos ni líneas duplicadas.</li>
+        <li>Cada vano con ancho, alto y antepecho (bloque con datos o tabla), con su ID.</li>
+        <li>Tabla de niveles completa y niveles por zona en planta.</li>
+        <li>Planta de azotea con losas, pretiles, volados y elementos.</li>
+        <li>Techos inclinados con pendiente, enrase, cumbrera y alero.</li>
+        <li>Rampas, sótanos y dobles alturas con sus niveles.</li>
+        <li>Formas especiales (inclinadas, curvas, celosías) con sus medidas o en modelo 3D.</li>
+        <li>Edificios de varios niveles: lista de niveles, plantas tipo y lo que atraviesa niveles.</li>
+        <li>Terreno con curvas o puntos de nivel, plataformas y muros de contención, si no es plano.</li>
+        <li>Escaleras especiales (caracol, curvas) con radios, giro y sentido.</li>
+        <li>Revisaste la tabla de valores por defecto y corregiste lo que no aplica.</li>
+        <li>Dos cortes o más, marcados en planta con dirección de vista.</li>
+        <li>Las cuatro fachadas, del mismo ancho que la planta.</li>
+        <li>Escalera con flecha SUBE, peraltes y huella.</li>
+        <li>Alberca y exteriores con niveles y límite de la maqueta.</li>
+        <li>Mobiliario: investigado (bloques con altura) o indicado como especular.</li>
+        <li>Cotas parciales que suman la total; misma altura total en todas las vistas.</li>
+        <li>Renders o fotos de referencia, si existen.</li>
+        <li>Datos de la maqueta llenos (sección 23).</li>
+      </ul>
+    </section>
+
+  </main>
+  <footer>Guía de planos para maquetas impresas en 3D · Medidas en metros · Los valores de los ejemplos son ilustrativos.</footer>
+</div>
+
+</body>
+</html>
