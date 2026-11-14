@@ -49,6 +49,14 @@ h1 { font: 800 clamp(30px, 5vw, 48px)/1.05 var(--font-display); margin: 0; lette
 .lede { max-width: 66ch; margin: 0; font-size: 18px; color: var(--muted); }
 .titleblock { display: flex; flex-wrap: wrap; gap: 8px 24px; font: 12px var(--font-mono); color: var(--muted); }
 .titleblock b { color: var(--ink); font-weight: 500; }
+.downloads { display: flex; flex-wrap: wrap; gap: 8px; }
+.dl { display: inline-flex; align-items: center; gap: 2px 8px; flex-wrap: wrap; padding: 8px 12px; border: 1px solid var(--rule);
+  border-radius: 4px; background: var(--sheet); color: var(--ink); text-decoration: none; font: 500 13px var(--font-body); }
+.dl::before { content: "↓"; font-family: var(--font-mono); color: var(--accent); }
+.dl:hover { border-color: var(--accent); color: var(--accent); }
+.dl.main { background: var(--accent); border-color: var(--accent); color: var(--sheet); font-weight: 600; }
+.dl.main::before { color: var(--sheet); }
+.dl.main small { font-weight: 400; opacity: .85; font-size: 12px; }
 
 nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font-size: 14px;
   max-height: calc(100vh - 48px); overflow-y: auto; }
@@ -188,7 +196,16 @@ a { color: var(--accent); }
     <h1>Guía de planos para maquetas</h1>
     <p class="lede">Qué enviarnos y cómo dibujarlo para que tu maqueta salga exacta a la primera, sin rondas de preguntas. Si algo no está dibujado o acotado, tenemos que suponerlo, y cada suposición puede ser un error en la maqueta.</p>
     <div class="titleblock"><span>Unidades: <b>metros</b></span><span>Formato: <b>DWG / DXF</b></span><span>Norte: <b>arriba (+Y)</b></span><span>Origen: <b>esquina suroeste</b></span></div>
-<div class="titleblock"><a href="Guia_de_planos_para_maquetas.pdf" style="font-weight:600">Descargar en PDF</a></div>
+    <div class="downloads" id="descargas">
+      <a class="dl main" href="https://mfpc0.github.io/guia-planos-maquetas/descargas/Guia_planos_maquetas_paquete_completo.zip" download>Descargar todo (ZIP)<small>guía en PDF + plantillas + tablas</small></a>
+      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/Guia_de_planos_para_maquetas.pdf" download>Guía en PDF</a>
+      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg" download>Plantilla DWG</a>
+      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt" download>Plantilla DWT</a>
+      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf" download>Plantilla DXF</a>
+      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg" download>Ejemplo DWG</a>
+      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf" download>Ejemplo DXF</a>
+      <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx" download>Tablas Excel</a>
+    </div>
   </header>
 
   <nav class="toc" aria-label="Contenido">
@@ -243,9 +260,9 @@ a { color: var(--accent); }
       <div class="tbl"><table>
         <thead><tr><th>Archivo</th><th>Qué es</th></tr></thead>
         <tbody>
-          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg">plantilla_maqueta.dwg</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt">.dwt</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf">.dxf</a></td><td>Dibujo vacío en metros con las 45 capas <code>MQ-</code>, los bloques de ventana, puerta y vano con sus datos, y 18 muebles con su altura. El <code>.dwt</code> sirve como plantilla de AutoCAD para dibujos nuevos</td></tr>
-          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg">ejemplo_maqueta.dwg</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf">.dxf</a></td><td>Una casa pequeña dibujada exactamente como pide esta guía. Ábrela para ver cómo queda cada cosa</td></tr>
-          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx">tablas_maqueta.xlsx</a></td><td>Todas las tablas (ventanas, puertas, niveles, mobiliario, acabados, elementos especiales), los valores por defecto y los datos de la maqueta, con listas de opciones</td></tr>
+          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg" download>plantilla_maqueta.dwg</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt" download>.dwt</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf" download>.dxf</a></td><td>Dibujo vacío en metros con las 45 capas <code>MQ-</code>, los bloques de ventana, puerta y vano con sus datos, y 18 muebles con su altura. El <code>.dwt</code> sirve como plantilla de AutoCAD para dibujos nuevos</td></tr>
+          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg" download>ejemplo_maqueta.dwg</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf" download>.dxf</a></td><td>Una casa pequeña dibujada exactamente como pide esta guía. Ábrela para ver cómo queda cada cosa</td></tr>
+          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx" download>tablas_maqueta.xlsx</a></td><td>Todas las tablas (ventanas, puertas, niveles, mobiliario, acabados, elementos especiales), los valores por defecto y los datos de la maqueta, con listas de opciones</td></tr>
         </tbody>
       </table></div>
     </section>
