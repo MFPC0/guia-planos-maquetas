@@ -30,6 +30,8 @@
   --good: #2c7a4b;
   --bad: #c0392b;
   --wallface: #e3e8e6;
+  /* vidrio: paneles translúcidos sobre una cuadrícula de dibujo con luces de la paleta */
+  --glass: rgba(255,255,255,.62); --glass-edge: rgba(255,255,255,.8); --glass-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 10px 30px rgba(24,34,45,.08), 0 1px 2px rgba(24,34,45,.06); --bloom-1: rgba(13,110,138,.09); --bloom-2: rgba(118,87,179,.08); --bloom-3: rgba(44,122,75,.07); --grid: rgba(24,34,45,.05);
   --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --font-body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
@@ -37,11 +39,13 @@
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #11161b; --sheet: #182027; --ink: #e5eaee; --muted: #9ba7b2; --rule: #2b353e; --accent: #4fb6d4;
   --c-int: #74818d; --c-win: #4cc4e8; --c-door: #e8a945; --c-win-text: #4cc4e8; --c-door-text: #e8a945; --c-lvl: #5fc289; --c-roof: #a88be3; --c-furn: #d98a5f;
-  --good: #5fc289; --bad: #ef6b5b; --wallface: #222c34; color-scheme: dark } }
+  --good: #5fc289; --bad: #ef6b5b; --wallface: #222c34;
+  --glass: rgba(24,32,39,.58); --glass-edge: rgba(255,255,255,.10); --glass-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 12px 32px rgba(0,0,0,.35); --bloom-1: rgba(79,182,212,.18); --bloom-2: rgba(168,139,227,.16); --bloom-3: rgba(95,194,137,.10); --grid: rgba(229,234,238,.04); color-scheme: dark } }
 :root[data-theme="dark"] {
   --paper: #11161b; --sheet: #182027; --ink: #e5eaee; --muted: #9ba7b2; --rule: #2b353e; --accent: #4fb6d4;
   --c-int: #74818d; --c-win: #4cc4e8; --c-door: #e8a945; --c-win-text: #4cc4e8; --c-door-text: #e8a945; --c-lvl: #5fc289; --c-roof: #a88be3; --c-furn: #d98a5f;
-  --good: #5fc289; --bad: #ef6b5b; --wallface: #222c34; color-scheme: dark }
+  --good: #5fc289; --bad: #ef6b5b; --wallface: #222c34;
+  --glass: rgba(24,32,39,.58); --glass-edge: rgba(255,255,255,.10); --glass-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 12px 32px rgba(0,0,0,.35); --bloom-1: rgba(79,182,212,.18); --bloom-2: rgba(168,139,227,.16); --bloom-3: rgba(95,194,137,.10); --grid: rgba(229,234,238,.04); color-scheme: dark }
 
 body { background: var(--paper); color: var(--ink); font: 16px/1.6 var(--font-body);
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
@@ -168,9 +172,42 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .skip:focus { top: calc(env(safe-area-inset-top, 0px) + 8px); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+/* ---- Vidrio (glassmorphism). Las figuras quedan opacas: son láminas de dibujo sobre el vidrio ---- */
+body {
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(60vmax 50vmax at 8% 0%, var(--bloom-1), transparent 70%),
+    radial-gradient(50vmax 45vmax at 100% 35%, var(--bloom-2), transparent 70%),
+    radial-gradient(55vmax 45vmax at 15% 100%, var(--bloom-3), transparent 70%),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: auto, auto, auto, 24px 24px, 24px 24px;
+  background-attachment: fixed;
+}
+nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main) {
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+nav.toc { padding: 16px; border-radius: 14px; }
+.pack div, .tier, .err, .form, .tbl { border-radius: 14px; }
+.dl { border-radius: 10px; }
+.tier.rec { border: 2px solid var(--accent); }
+th { background: color-mix(in srgb, var(--paper) 55%, transparent); }
+figure { border-radius: 14px; border-color: var(--glass-edge); box-shadow: var(--glass-shadow); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main) { background: color-mix(in srgb, var(--sheet) 94%, transparent); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  body { background-image: none; }
+  nav.toc, .pack div, .tier, .err, .form, .tbl, .dl:not(.main) { background: var(--sheet); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
 @media (max-width: 860px) {
   .wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-block: 24px 56px; }
-  nav.toc { position: static; border: 1px solid var(--rule); border-radius: 4px; padding: 14px; background: var(--sheet); }
+  nav.toc { position: static; }
   nav.toc ol { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
   .err { grid-template-columns: minmax(0, 1fr); }
   figure { overflow-x: auto; display: block; }
@@ -191,6 +228,9 @@ a { color: var(--accent); text-underline-offset: 2px; }
     --c-int: #8b97a3; --c-win: #0f8fb3; --c-door: #c47f10; --c-win-text: #0a7898; --c-door-text: #93590a; --c-lvl: #2c7a4b; --c-roof: #7657b3; --c-furn: #a3532b;
     --good: #2c7a4b; --bad: #c0392b; --wallface: #e3e8e6; color-scheme: light; }
   body { font-size: 11pt; padding: 0; }
+  body { background: #ffffff; }
+  nav.toc, .pack div, .tier, .err, .form, .tbl, .dl, figure { background: #ffffff; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; border: 1px solid var(--rule); }
+  .tier.rec { border: 2px solid var(--accent); }
   .wrap { grid-template-columns: 1fr; gap: 20px; padding: 0; max-width: none; }
   nav.toc { position: static; }
   /* Chrome no respeta break-inside dentro de contenedores grid al paginar: en impresión todo es bloque */
