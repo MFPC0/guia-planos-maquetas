@@ -8,7 +8,8 @@
 <title>Guía de planos para maquetas</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: hoja de dibujo; índice fijo a la izquierda en pantallas anchas, una columna de lectura con láminas ilustradas */
 :root {
@@ -21,6 +22,8 @@
   --c-int: #8b97a3;        /* muro interior */
   --c-win: #0f8fb3;        /* ventanas */
   --c-door: #c47f10;       /* puertas */
+  --c-win-text: #0a7898;   /* texto sobre fondo claro: 4.6:1 */
+  --c-door-text: #93590a;  /* texto sobre fondo claro: 5.2:1 */
   --c-lvl: #2c7a4b;        /* niveles */
   --c-roof: #7657b3;       /* losas / azotea */
   --c-furn: #a3532b;       /* mobiliario */
@@ -33,18 +36,17 @@
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #11161b; --sheet: #182027; --ink: #e5eaee; --muted: #9ba7b2; --rule: #2b353e; --accent: #4fb6d4;
-  --c-int: #74818d; --c-win: #4cc4e8; --c-door: #e8a945; --c-lvl: #5fc289; --c-roof: #a88be3; --c-furn: #d98a5f;
+  --c-int: #74818d; --c-win: #4cc4e8; --c-door: #e8a945; --c-win-text: #4cc4e8; --c-door-text: #e8a945; --c-lvl: #5fc289; --c-roof: #a88be3; --c-furn: #d98a5f;
   --good: #5fc289; --bad: #ef6b5b; --wallface: #222c34; color-scheme: dark } }
 :root[data-theme="dark"] {
   --paper: #11161b; --sheet: #182027; --ink: #e5eaee; --muted: #9ba7b2; --rule: #2b353e; --accent: #4fb6d4;
-  --c-int: #74818d; --c-win: #4cc4e8; --c-door: #e8a945; --c-lvl: #5fc289; --c-roof: #a88be3; --c-furn: #d98a5f;
+  --c-int: #74818d; --c-win: #4cc4e8; --c-door: #e8a945; --c-win-text: #4cc4e8; --c-door-text: #e8a945; --c-lvl: #5fc289; --c-roof: #a88be3; --c-furn: #d98a5f;
   --good: #5fc289; --bad: #ef6b5b; --wallface: #222c34; color-scheme: dark }
 
 body { background: var(--paper); color: var(--ink); font: 16px/1.6 var(--font-body);
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .wrap { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; padding-block: 40px 80px; }
 header.top { grid-column: 1 / -1; display: grid; gap: 12px; border-bottom: 2px solid var(--ink); padding-bottom: 24px; }
-.eyebrow { font: 500 12px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 h1 { font: 800 clamp(30px, 5vw, 48px)/1.05 var(--font-display); margin: 0; letter-spacing: -0.02em; text-wrap: balance; }
 .lede { max-width: 66ch; margin: 0; font-size: 18px; color: var(--muted); }
 .titleblock { display: flex; flex-wrap: wrap; gap: 8px 24px; font: 12px var(--font-mono); color: var(--muted); }
@@ -52,15 +54,16 @@ h1 { font: 800 clamp(30px, 5vw, 48px)/1.05 var(--font-display); margin: 0; lette
 .downloads { display: flex; flex-wrap: wrap; gap: 8px; }
 .dl { display: inline-flex; align-items: center; gap: 2px 8px; flex-wrap: wrap; padding: 8px 12px; border: 1px solid var(--rule);
   border-radius: 4px; background: var(--sheet); color: var(--ink); text-decoration: none; font: 500 13px var(--font-body); }
-.dl::before { content: "↓"; font-family: var(--font-mono); color: var(--accent); }
+.dl::before { content: ""; width: 14px; height: 14px; flex: none; background-color: var(--accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2.5v7.5M4.5 6.5 8 10l3.5-3.5M3 13.5h10'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 2.5v7.5M4.5 6.5 8 10l3.5-3.5M3 13.5h10'/%3E%3C/svg%3E") center / contain no-repeat; }
 .dl:hover { border-color: var(--accent); color: var(--accent); }
 .dl.main { background: var(--accent); border-color: var(--accent); color: var(--sheet); font-weight: 600; }
-.dl.main::before { color: var(--sheet); }
+.dl.main::before { background-color: var(--sheet); }
 .dl.main small { font-weight: 400; opacity: .85; font-size: 12px; }
 
 nav.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; font-size: 14px;
   max-height: calc(100vh - 48px); overflow-y: auto; }
-nav.toc p { font: 500 11px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+nav.toc p { font: 500 12px var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
 nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; counter-reset: t; }
 nav.toc li { counter-increment: t; }
 nav.toc a { display: grid; grid-template-columns: 26px 1fr; color: var(--ink); text-decoration: none; padding: 3px 0; }
@@ -73,8 +76,9 @@ section { display: grid; gap: 18px; scroll-margin-top: 24px; }
 .sec-num { font: 500 12px var(--font-mono); color: var(--accent); letter-spacing: 0.08em; }
 h2 { font: 700 28px/1.15 var(--font-display); margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
 h3 { font: 700 18px/1.3 var(--font-display); margin: 8px 0 0; }
-p { margin: 0; max-width: 68ch; }
-ul.list, ol.list { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 68ch; }
+p { margin: 0; max-width: 62ch; text-wrap: pretty; }
+ul.list, ol.list { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 62ch; }
+li { text-wrap: pretty; }
 code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
 code { background: var(--wallface); padding: 1px 5px; border-radius: 3px; }
 
@@ -83,13 +87,11 @@ figure svg { width: 100%; height: auto; display: block; }
 figcaption { font-size: 13px; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 10px; }
 figcaption b { color: var(--ink); font-family: var(--font-mono); font-weight: 500; margin-right: 6px; }
 
-.why { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; color: var(--muted); max-width: 66ch; }
-.why b { color: var(--ink); }
 
 .tbl { overflow-x: auto; border: 1px solid var(--rule); border-radius: 4px; background: var(--sheet); }
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
 th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
-th { font: 500 11px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--paper); white-space: nowrap; }
+th { font: 500 12px var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); background: var(--paper); white-space: nowrap; }
 tr:last-child td { border-bottom: 0; }
 td.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
 td .sw { display: inline-block; width: 22px; height: 8px; border-radius: 2px; vertical-align: middle; margin-right: 8px; }
@@ -104,7 +106,7 @@ td .sw { display: inline-block; width: 22px; height: 8px; border-radius: 2px; ve
 .tier { background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 16px; display: grid; gap: 8px; align-content: start; }
 .tier.rec { border: 2px solid var(--accent); }
 .tier h3 { margin: 0; }
-.tier .tag { font: 500 11px var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+.tier .tag { font: 500 12px var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
 .tier ul { margin: 0; padding-left: 18px; font-size: 14px; display: grid; gap: 4px; }
 .tier p { font-size: 14px; color: var(--muted); }
 
@@ -112,14 +114,14 @@ td .sw { display: inline-block; width: 22px; height: 8px; border-radius: 2px; ve
 .err { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; border: 1px solid var(--rule); border-radius: 4px; background: var(--sheet); overflow: hidden; }
 .err > div { padding: 12px 14px; font-size: 14px; min-width: 0; }
 .err > div:first-child { border-right: 1px solid var(--rule); }
-.err .k { display: block; margin-bottom: 4px; font: 500 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.err .k { display: block; margin-bottom: 4px; font: 500 12px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
 .err .k.no { color: var(--bad); } .err .k.si { color: var(--good); }
 
 .form { background: var(--sheet); border: 1px solid var(--ink); border-radius: 4px; padding: 20px; display: grid; gap: 18px; }
 .form h3 { margin: 0; font-size: 15px; text-transform: uppercase; letter-spacing: 0.06em; }
 .fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 24px; }
 .field { display: grid; gap: 2px; font-size: 14px; }
-.field label { color: var(--muted); font-size: 12px; font-family: var(--font-mono); }
+.field .lbl { color: var(--muted); font-size: 12px; font-family: var(--font-mono); }
 .field .line { border-bottom: 1px solid var(--ink); min-height: 24px; }
 .opts { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; }
 .opts span::before { content: ""; display: inline-block; width: 11px; height: 11px; border: 1.5px solid var(--ink); border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
@@ -131,14 +133,14 @@ td .sw { display: inline-block; width: 22px; height: 8px; border-radius: 2px; ve
 footer { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 16px; font: 12px var(--font-mono); color: var(--muted); }
 
 /* SVG: todo color sale de los tokens para que funcione en claro y oscuro */
-svg text { font-family: var(--font-mono); font-size: 11px; fill: var(--ink); }
+svg text { font-family: var(--font-mono); font-size: 12px; fill: var(--ink); }
 svg .t-muted { fill: var(--muted); }
 svg .t-acc { fill: var(--accent); }
 svg .t-lvl { fill: var(--c-lvl); }
 svg .t-good { fill: var(--good); font-weight: 500; }
 svg .t-bad { fill: var(--bad); font-weight: 500; }
 svg .t-big { font-family: var(--font-display); font-weight: 700; font-size: 13px; }
-svg .t-sm { font-size: 10px; }
+svg .t-sm { font-size: 11px; }
 .f-ink { fill: var(--ink); } .f-int { fill: var(--c-int); } .f-sheet { fill: var(--sheet); } .f-paper { fill: var(--paper); }
 .f-wall { fill: var(--wallface); } .f-acc { fill: var(--accent); } .f-roof { fill: var(--c-roof); fill-opacity: .18; }
 .f-roofs { fill: var(--c-roof); } .f-win { fill: var(--c-win); fill-opacity: .16; } .f-water { fill: var(--c-win); fill-opacity: .2; }
@@ -159,7 +161,11 @@ svg .t-sm { font-size: 10px; }
 .s-cut { stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-dasharray: 12 3 2 3; }
 .hatch line { stroke: var(--muted); stroke-width: 1; }
 
-a { color: var(--accent); }
+a { color: var(--accent); text-underline-offset: 2px; }
+::selection { background: color-mix(in srgb, var(--accent) 28%, transparent); }
+.skip { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: -60px; z-index: 20; padding: 8px 12px;
+  background: var(--accent); color: var(--sheet); border-radius: 4px; font-weight: 600; text-decoration: none; }
+.skip:focus { top: calc(env(safe-area-inset-top, 0px) + 8px); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 @media (max-width: 860px) {
@@ -167,11 +173,22 @@ a { color: var(--accent); }
   nav.toc { position: static; border: 1px solid var(--rule); border-radius: 4px; padding: 14px; background: var(--sheet); }
   nav.toc ol { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
   .err { grid-template-columns: minmax(0, 1fr); }
+  figure { overflow-x: auto; display: block; }
+  figure svg { min-width: 700px; }
+  figure > figcaption { position: sticky; left: 0; margin-top: 12px; }
+  .tbl, figure {
+    background:
+      linear-gradient(to right, var(--sheet) 30%, transparent) left / 32px 100% no-repeat local,
+      linear-gradient(to left, var(--sheet) 30%, transparent) right / 32px 100% no-repeat local,
+      radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--ink) 22%, transparent), transparent) left / 12px 100% no-repeat scroll,
+      radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--ink) 22%, transparent), transparent) right / 12px 100% no-repeat scroll,
+      var(--sheet);
+  }
   .err > div:first-child { border-right: 0; border-bottom: 1px solid var(--rule); }
 }
 @media print {
   :root { --paper: #ffffff; --sheet: #ffffff; --ink: #18222d; --muted: #5a6672; --rule: #c9d0cc; --accent: #0d6e8a;
-    --c-int: #8b97a3; --c-win: #0f8fb3; --c-door: #c47f10; --c-lvl: #2c7a4b; --c-roof: #7657b3; --c-furn: #a3532b;
+    --c-int: #8b97a3; --c-win: #0f8fb3; --c-door: #c47f10; --c-win-text: #0a7898; --c-door-text: #93590a; --c-lvl: #2c7a4b; --c-roof: #7657b3; --c-furn: #a3532b;
     --good: #2c7a4b; --bad: #c0392b; --wallface: #e3e8e6; color-scheme: light; }
   body { font-size: 11pt; padding: 0; }
   .wrap { grid-template-columns: 1fr; gap: 20px; padding: 0; max-width: none; }
@@ -184,18 +201,20 @@ a { color: var(--accent); }
   .err > div:first-child { border-right: 0; border-bottom: 1px solid var(--rule); }
   figure > figcaption { margin-top: 12px; }
   .tbl { overflow: visible; }
+  figure svg { min-width: 0; }
+  .skip { display: none; }
   th { white-space: normal; }
   figure, .err, .tier, .tbl, .pack div, .fgrid { break-inside: avoid; }
   h2, h3, .sec-head, .sec-head + p { break-after: avoid; }
 }
 </style>
 
+<a class="skip" href="#contenido">Saltar al contenido</a>
 <div class="wrap">
   <header class="top">
-    <div class="eyebrow">Maquetas arquitectónicas impresas en 3D</div>
     <h1>Guía de planos para maquetas</h1>
     <p class="lede">Qué enviarnos y cómo dibujarlo para que tu maqueta salga exacta a la primera, sin rondas de preguntas. Si algo no está dibujado o acotado, tenemos que suponerlo, y cada suposición puede ser un error en la maqueta.</p>
-    <div class="titleblock"><span>Unidades: <b>metros</b></span><span>Formato: <b>DWG / DXF</b></span><span>Norte: <b>arriba (+Y)</b></span><span>Origen: <b>esquina suroeste</b></span></div>
+    <div class="titleblock"><span>Para: <b>maquetas impresas en 3D</b></span><span>Unidades: <b>metros</b></span><span>Formato: <b>DWG / DXF</b></span><span>Norte: <b>arriba (+Y)</b></span><span>Origen: <b>esquina suroeste</b></span></div>
     <div class="downloads" id="descargas">
       <a class="dl main" href="https://mfpc0.github.io/guia-planos-maquetas/descargas/Guia_planos_maquetas_paquete_completo.zip" download>Descargar todo (ZIP)<small>guía en PDF + plantillas + tablas</small></a>
       <a class="dl" href="https://mfpc0.github.io/guia-planos-maquetas/Guia_de_planos_para_maquetas.pdf" download>Guía en PDF</a>
@@ -238,7 +257,7 @@ a { color: var(--accent); }
     </ol>
   </nav>
 
-  <main>
+  <main id="contenido">
 
     <!-- 01 -->
     <section id="paquete">
@@ -379,8 +398,8 @@ a { color: var(--accent); }
           <rect class="s-lvl" x="215" y="175" width="160" height="100"/>
           <text x="240" y="230" class="t-lvl">NPT +0.95</text>
           <text x="90" y="120" class="t-lvl">NPT +1.00</text>
-          <text x="96" y="58" class="t-sm" style="fill:var(--c-win)">V-01</text>
-          <text x="58" y="268" class="t-sm" style="fill:var(--c-door)">P-01</text>
+          <text x="96" y="58" class="t-sm" style="fill:var(--c-win-text)">V-01</text>
+          <text x="58" y="268" class="t-sm" style="fill:var(--c-door-text)">P-01</text>
           <g transform="translate(420 40)">
             <rect class="f-ink" x="0" y="0" width="34" height="10"/><text x="46" y="9">MQ-MURO-EXT</text>
             <rect class="f-int" x="0" y="32" width="34" height="7"/><text x="46" y="40">MQ-MURO-INT</text>
@@ -484,7 +503,7 @@ a { color: var(--accent); }
           <path class="f-ink" d="M440 120h60v16h-60zM600 120h60v16h-60z"/>
           <rect class="f-sheet" x="500" y="119" width="100" height="18"/><path class="s-win" d="M500 125h100M500 131h100"/>
           <path class="s-acc" d="M550 118v20M540 128h20"/><circle class="s-acc" cx="550" cy="128" r="5"/>
-          <text x="535" y="108" style="fill:var(--c-win)">V-03</text>
+          <text x="535" y="108" style="fill:var(--c-win-text)">V-03</text>
           <path class="s-thin" d="M553 133l20 35"/>
           <text x="500" y="182" class="t-sm">punto de inserción: centro del vano,</text>
           <text x="500" y="195" class="t-sm">sobre el eje del muro</text>
@@ -879,7 +898,7 @@ a { color: var(--accent); }
           <path class="s-ink" d="M100 60v30h22v20h22v20l220 50h216V60"/>
           <path class="s-win" d="M100 68h480" style="stroke-dasharray:6 3"/>
           <text x="20" y="52" class="t-lvl">borde +1.00</text>
-          <text x="440" y="84" style="fill:var(--c-win)">espejo de agua +0.95</text>
+          <text x="440" y="84" style="fill:var(--c-win-text)">espejo de agua +0.95</text>
           <text x="150" y="206" class="t-sm">escalones interiores</text><path class="s-thin" d="M160 196l-24-62"/>
           <path class="s-dim" d="M90 68v62M86 130h8"/><text x="18" y="104" class="t-acc">mínima</text>
           <path class="s-dim" d="M600 68v112M596 180h8"/><text x="608" y="128" class="t-acc">máxima</text>
@@ -1127,41 +1146,41 @@ a { color: var(--accent); }
       <div class="form">
         <h3>Proyecto</h3>
         <div class="fgrid">
-          <div class="field"><label>Nombre del proyecto</label><div class="line"></div></div>
-          <div class="field"><label>Fecha de entrega deseada</label><div class="line"></div></div>
-          <div class="field"><label>Versión y fecha de los planos</label><div class="line"></div></div>
-          <div class="field"><label>Contacto para dudas técnicas (nombre y teléfono)</label><div class="line"></div></div>
-          <div class="field"><label>Uso de la maqueta</label><div class="opts"><span>Venta / exhibición</span><span>Presentación</span><span>Concurso</span><span>Estudio</span></div></div>
-          <div class="field"><label>Qué debe verse al abrirla</label><div class="line"></div></div>
+          <div class="field"><span class="lbl">Nombre del proyecto</span><div class="line"></div></div>
+          <div class="field"><span class="lbl">Fecha de entrega deseada</span><div class="line"></div></div>
+          <div class="field"><span class="lbl">Versión y fecha de los planos</span><div class="line"></div></div>
+          <div class="field"><span class="lbl">Contacto para dudas técnicas (nombre y teléfono)</span><div class="line"></div></div>
+          <div class="field"><span class="lbl">Uso de la maqueta</span><div class="opts"><span>Venta / exhibición</span><span>Presentación</span><span>Concurso</span><span>Estudio</span></div></div>
+          <div class="field"><span class="lbl">Qué debe verse al abrirla</span><div class="line"></div></div>
         </div>
         <h3>Escala e impresión</h3>
         <div class="fgrid">
-          <div class="field"><label>Escala (1:200 → 1 cm = 2 m)</label><div class="line"></div></div>
-          <div class="field"><label>O tamaño máximo de la maqueta (cm)</label><div class="line"></div></div>
-          <div class="field"><label>Impresora y boquilla</label><div class="line"></div></div>
-          <div class="field"><label>Material</label><div class="opts"><span>PLA</span><span>PETG</span><span>Resina</span></div></div>
-          <div class="field"><label>Colores</label><div class="line"></div></div>
+          <div class="field"><span class="lbl">Escala (1:200 → 1 cm = 2 m)</span><div class="line"></div></div>
+          <div class="field"><span class="lbl">O tamaño máximo de la maqueta (cm)</span><div class="line"></div></div>
+          <div class="field"><span class="lbl">Impresora y boquilla</span><div class="line"></div></div>
+          <div class="field"><span class="lbl">Material</span><div class="opts"><span>PLA</span><span>PETG</span><span>Resina</span></div></div>
+          <div class="field"><span class="lbl">Colores</span><div class="line"></div></div>
         </div>
         <h3>Piezas y alcance</h3>
         <div class="fgrid">
-          <div class="field"><label>Partes que se quitan</label><div class="opts"><span>Azotea</span><span>Cada nivel</span><span>Ninguna</span></div></div>
-          <div class="field"><label>Techos</label><div class="opts"><span>Encajados entre muros</span><span>Apoyados encima</span></div></div>
-          <div class="field"><label>Alcance</label><div class="opts"><span>Solo la casa</span><span>Casa + alberca y terrazas</span><span>Terreno completo</span></div></div>
-          <div class="field"><label>Incluir</label><div class="opts"><span>Autos</span><span>Árboles</span><span>Bardas</span><span>Personas</span><span>Vecinos</span><span>Calle</span></div></div>
-          <div class="field"><label>Terreno</label><div class="opts"><span>Con su pendiente real</span><span>Plano</span></div></div>
-          <div class="field"><label>Edificios de varios niveles: se retira</label><div class="opts"><span>Cada nivel</span><span>Por grupos</span><span>Solo azotea</span></div></div>
-          <div class="field"><label>Si no cabe en la impresora</label><div class="opts"><span>Dividir en piezas</span><span>Reducir la escala</span></div></div>
-          <div class="field"><label>Elementos delicados (barandales, pérgolas)</label><div class="opts"><span>Engrosar</span><span>Simplificar</span><span>Omitir</span><span>Otro material</span></div></div>
+          <div class="field"><span class="lbl">Partes que se quitan</span><div class="opts"><span>Azotea</span><span>Cada nivel</span><span>Ninguna</span></div></div>
+          <div class="field"><span class="lbl">Techos</span><div class="opts"><span>Encajados entre muros</span><span>Apoyados encima</span></div></div>
+          <div class="field"><span class="lbl">Alcance</span><div class="opts"><span>Solo la casa</span><span>Casa + alberca y terrazas</span><span>Terreno completo</span></div></div>
+          <div class="field"><span class="lbl">Incluir</span><div class="opts"><span>Autos</span><span>Árboles</span><span>Bardas</span><span>Personas</span><span>Vecinos</span><span>Calle</span></div></div>
+          <div class="field"><span class="lbl">Terreno</span><div class="opts"><span>Con su pendiente real</span><span>Plano</span></div></div>
+          <div class="field"><span class="lbl">Edificios de varios niveles: se retira</span><div class="opts"><span>Cada nivel</span><span>Por grupos</span><span>Solo azotea</span></div></div>
+          <div class="field"><span class="lbl">Si no cabe en la impresora</span><div class="opts"><span>Dividir en piezas</span><span>Reducir la escala</span></div></div>
+          <div class="field"><span class="lbl">Elementos delicados (barandales, pérgolas)</span><div class="opts"><span>Engrosar</span><span>Simplificar</span><span>Omitir</span><span>Otro material</span></div></div>
         </div>
         <h3>Detalle</h3>
         <div class="fgrid">
-          <div class="field"><label>Ventanas</label><div class="opts"><span>Hueco abierto</span><span>Vidrio simulado</span><span>Acetato</span></div></div>
-          <div class="field"><label>Mobiliario</label><div class="opts"><span>Investigar</span><span>Especular</span><span>Sin muebles</span></div></div>
-          <div class="field"><label>Texturas (piedra, madera)</label><div class="opts"><span>En relieve</span><span>Solo color</span><span>No</span></div></div>
-          <div class="field"><label>Base</label><div class="opts"><span>Maciza</span><span>Hueca</span><span>Con rotulación</span></div></div>
-          <div class="field"><label>Logo o texto para la base (logo en vector: SVG, DXF o PDF vectorial)</label><div class="line"></div></div>
+          <div class="field"><span class="lbl">Ventanas</span><div class="opts"><span>Hueco abierto</span><span>Vidrio simulado</span><span>Acetato</span></div></div>
+          <div class="field"><span class="lbl">Mobiliario</span><div class="opts"><span>Investigar</span><span>Especular</span><span>Sin muebles</span></div></div>
+          <div class="field"><span class="lbl">Texturas (piedra, madera)</span><div class="opts"><span>En relieve</span><span>Solo color</span><span>No</span></div></div>
+          <div class="field"><span class="lbl">Base</span><div class="opts"><span>Maciza</span><span>Hueca</span><span>Con rotulación</span></div></div>
+          <div class="field"><span class="lbl">Logo o texto para la base (logo en vector: SVG, DXF o PDF vectorial)</span><div class="line"></div></div>
         </div>
-        <div class="field"><label>Notas y elementos especiales (arcos, volados, pérgolas…)</label><div class="line"></div><div class="line"></div></div>
+        <div class="field"><span class="lbl">Notas y elementos especiales (arcos, volados, pérgolas…)</span><div class="line"></div><div class="line"></div></div>
       </div>
     </section>
 
