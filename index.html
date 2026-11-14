@@ -238,6 +238,16 @@ a { color: var(--accent); }
         <div><svg viewBox="0 0 40 40" aria-hidden="true"><rect class="s-ink" x="5" y="9" width="30" height="22" rx="2"/><path class="s-thin" d="M5 27l9-9 7 7 5-5 9 9"/><circle class="s-ink" cx="27" cy="15" r="3"/></svg><b>Referencias visuales</b><span>Renders o fotos de la obra, si existen</span></div>
       </div>
       <p>Indica también la <b>fecha y versión</b> de los planos y <b>quién puede contestar dudas técnicas</b> (nombre y teléfono del arquitecto o dibujante). Así, si algo no cuadra, lo resolvemos con esa persona sin escalar al cliente.</p>
+      <h3>Plantillas listas para usar</h3>
+      <p>Para no empezar de cero, descarga estos archivos. Ya traen las capas, los bloques con sus datos y las tablas tal como los pide esta guía.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Archivo</th><th>Qué es</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwg">plantilla_maqueta.dwg</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dwt">.dwt</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/plantilla_maqueta.dxf">.dxf</a></td><td>Dibujo vacío en metros con las 45 capas <code>MQ-</code>, los bloques de ventana, puerta y vano con sus datos, y 18 muebles con su altura. El <code>.dwt</code> sirve como plantilla de AutoCAD para dibujos nuevos</td></tr>
+          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dwg">ejemplo_maqueta.dwg</a> · <a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/ejemplo_maqueta.dxf">.dxf</a></td><td>Una casa pequeña dibujada exactamente como pide esta guía. Ábrela para ver cómo queda cada cosa</td></tr>
+          <tr><td><a href="https://mfpc0.github.io/guia-planos-maquetas/plantillas/tablas_maqueta.xlsx">tablas_maqueta.xlsx</a></td><td>Todas las tablas (ventanas, puertas, niveles, mobiliario, acabados, elementos especiales), los valores por defecto y los datos de la maqueta, con listas de opciones</td></tr>
+        </tbody>
+      </table></div>
     </section>
 
     <!-- 02 -->
@@ -288,6 +298,12 @@ a { color: var(--accent); }
         <li><b>Referencias externas (XREF):</b> si el dibujo usa otros archivos insertados, enlázalos al archivo (comando <code>BIND</code>) o envía todo junto con <code>ETRANSMIT</code>. Si no, esas partes llegan vacías.</li>
         <li><b>Versión:</b> escribe la fecha y la revisión de los planos. Si algo cambia después, manda otra vez el juego completo, no solo la lámina que cambió.</li>
         <li><b>Remodelaciones:</b> separa lo existente de lo nuevo (por ejemplo <code>MQ-MURO-EXT-PB-EXIST</code>) y di qué se va a maquetear.</li>
+      </ul>
+      <h3>Cómo enviar los archivos</h3>
+      <ul class="list">
+        <li>Todo en <b>una carpeta comprimida (ZIP)</b>, compartida con un enlace de Google Drive, OneDrive, Dropbox o WeTransfer. No mandes adjuntos sueltos por correo: se pierden o los rechaza el servidor por tamaño.</li>
+        <li>Nombres claros con versión y fecha, por ejemplo <code>CASA-LOMAS_planos_v03_2026-11-20.dwg</code> o <code>CASA-LOMAS_tablas_v03.xlsx</code>.</li>
+        <li>Si mandas una versión nueva, cambia el número de versión en el nombre y manda el juego completo.</li>
       </ul>
       <h3>Si no tienes DWG</h3>
       <p>Se puede trabajar con PDF, pero solo si es vectorial (exportado desde el programa de dibujo, no escaneado) y está acotado por completo: cada muro, cada vano y cada nivel con su cota escrita. Con planos en papel o escaneados, la precisión depende solo de las cotas; lo que no tenga cota se estima a ojo.</p>
@@ -774,6 +790,7 @@ a { color: var(--accent); }
         <li>Materiales, si quieres colores o texturas en la maqueta.</li>
         <li><b>Elementos en relieve:</b> cornisas, marcos, parteluces, celosías, repisones, con cuánto sobresalen y su espesor. A 1:200, lo que sobresale menos de 4 cm reales (0.2 mm en la maqueta) no se nota y se omite.</li>
         <li><b>Instalaciones que se ven:</b> paneles solares, aires acondicionados, tinacos, chimeneas, antenas.</li>
+        <li><b>Alzados interiores</b> (solo a escala 1:50 o mayor, cuando el interior se ve con detalle): cocina, baños, closets y muebles fijos, con sus alturas.</li>
         <li>Escribe desde dónde se ve: "Fachada norte, vista desde el norte".</li>
       </ul>
     </section>
@@ -1125,6 +1142,7 @@ a { color: var(--accent); }
           <div class="field"><label>Mobiliario</label><div class="opts"><span>Investigar</span><span>Especular</span><span>Sin muebles</span></div></div>
           <div class="field"><label>Texturas (piedra, madera)</label><div class="opts"><span>En relieve</span><span>Solo color</span><span>No</span></div></div>
           <div class="field"><label>Base</label><div class="opts"><span>Maciza</span><span>Hueca</span><span>Con rotulación</span></div></div>
+          <div class="field"><label>Logo o texto para la base (logo en vector: SVG, DXF o PDF vectorial)</label><div class="line"></div></div>
         </div>
         <div class="field"><label>Notas y elementos especiales (arcos, volados, pérgolas…)</label><div class="line"></div><div class="line"></div></div>
       </div>
@@ -1156,6 +1174,8 @@ a { color: var(--accent); }
         <li>Mobiliario: investigado (bloques con altura) o indicado como especular.</li>
         <li>Cotas parciales que suman la total; misma altura total en todas las vistas.</li>
         <li>Renders o fotos de referencia, si existen.</li>
+        <li>Logo en formato vectorial, si la base lleva rotulación.</li>
+        <li>Todo en un ZIP con nombres claros, versión y fecha, compartido por enlace.</li>
         <li>Datos de la maqueta llenos (sección 23).</li>
       </ul>
     </section>
